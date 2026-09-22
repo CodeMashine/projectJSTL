@@ -12,16 +12,20 @@ import org.apache.taglibs.standard.extra.spath.Step;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
-public class JsonQuestParser implements QuestParser {
-	@Override
-	public void getQuest(String questName) {
+public class JsonQuestParser {
+	private final Map<String , Map<String, QuestionDTO>> questCash = new HashMap<>();
+	public Map<String , QuestionDTO> getQuest(String questName) {
+		if(questCash.containsKey(questName)) {
+			return questCash.get(questName) ;
+		}
 		AppConfig config = BeanFactory.getBean(AppConfig.class);
 		String questPath = config.getQuestPath();
 		Map<String , QuestionDTO> quest = parseJsonQuest(questName);
-		System.out.println(quest);
-//		return null;
+		questCash.put(questName, quest);
+		return quest;
 	}
 
 	private Map<String , QuestionDTO> parseJsonQuest(String questName) {

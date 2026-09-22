@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestDTO {
-	private QuestionDTO currentQuestion;
+	private QuestionDTO quest ;
 	private List<QuestionDTO> questionList = new ArrayList<>();
 	public List<QuestionDTO> getQuestionList() {
 		return questionList;
