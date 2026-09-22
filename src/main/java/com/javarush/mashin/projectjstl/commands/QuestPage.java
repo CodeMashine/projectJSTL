@@ -12,7 +12,7 @@ public class QuestPage implements Command {
 	@Override
 	public String doGet(HttpServletRequest req) {
 		String questName = req.getParameter("quest");
-		jsonQuestParser.getQuest(questName);
+//		jsonQuestParser.getQuest(questName);
 		return null;
 	}
 }
