@@ -1,0 +1,51 @@
+{
+  "start": {
+    "question": "Вы стоите перед развилкой. Куда пойдете?",
+    "choices": [
+      {
+        "answer": "В темную пещеру",
+        "nextStep": "cave"
+      },
+      {
+        "answer": "По залитой солнцем тропинке",
+        "nextStep": "path"
+      }
+    ]
+  },
+  "cave": {
+    "question": "В пещере темно, вы слышите шорох...",
+    "choices": [
+      {
+        "answer": "Развернутся и отступить",
+        "nextStep": "dead"
+      },
+      {
+        "answer": "Зажечь факел и идти вперед",
+        "nextStep": "dead"
+      }
+    ]
+  },
+  "path": {
+    "question": "На дороге вас встретили разбоиники, и угрожают расправой",
+    "choices": [
+      {
+        "answer": "Попытаться бежать",
+        "nextStep": "dead"
+      },
+      {
+        "answer": "Начать битву",
+        "nextStep": "dead"
+      }
+    ]
+  },
+  "dead": {
+    "question": "вы умерли",
+    "choices": [
+      {
+        "answer": "начать заново",
+        "nextStep": "start"
+      }
+
+    ]
+  }
+}

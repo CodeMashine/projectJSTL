@@ -1,4 +1,4 @@
-package com.javarush.mashin.projectjstl.controllers;
+package com.javarush.mashin.projectjstl.commands;
 
 import java.io.*;
 
