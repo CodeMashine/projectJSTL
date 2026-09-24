@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -15,21 +14,26 @@
     </div>
     <div class="quest-wrapper-body">
         <div>
-            Current question - ${sessionScope.question.getQuestion()}
+            Current question - ${requestScope.question.getQuestion()}
         </div>
         <div>
-            <c:forEach var="item" items="${sessionScope.question.getChoices()}">
-               <div> <a href="quest-page?quest=${sessionScope.quest}&currentStep=${item.getNextStep()}"> ${item.getAnswer()} <a></div>
+            <c:forEach var="item" items="${requestScope.question.getChoices()}">
+                <ol>
+                    <a href="quest-page?quest=${sessionScope.quest}&currentStep=${item.getNextStep()}"> ${item.getAnswer()} </a>
+                </ol>
             </c:forEach>
         </div>
 
     </div>
-    <button class="quest-answer"> answer</button>
 </div>
-<div class="test"> this is quest page</div>
 
-<br/>
+<c:if test="${requestScope.question.isWin()}">
+    <div>YOU WIN!!!</div>
+</c:if>
 
-<button onclick="window.location.href='start-page'">main</button>
+<c:if test="${requestScope.question.isTerminal()}">
+    <button onclick="window.location.href='start-page'">main</button>
+</c:if>
+
 </body>
 </html>

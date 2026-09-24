@@ -15,11 +15,11 @@ import java.io.IOException;
 public class FrontController extends HttpServlet {
 	private final HttpResolver httpResolver = BeanFactory.getBean(HttpResolver.class);
 
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		AppConfig config = BeanFactory.getBean(AppConfig.class);
-	}
+//	@Override
+//	public void init() throws ServletException {
+//		super.init();
+//		AppConfig config = BeanFactory.getBean(AppConfig.class);
+//	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

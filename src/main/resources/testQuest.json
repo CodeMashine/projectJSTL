@@ -10,20 +10,24 @@
         "answer": "По залитой солнцем тропинке",
         "nextStep": "path"
       }
-    ]
+    ],
+    "isTerminal": false,
+    "isWin" : false
   },
   "cave": {
     "question": "В пещере темно, вы слышите шорох...",
     "choices": [
       {
         "answer": "Развернутся и отступить",
-        "nextStep": "dead"
+        "nextStep": "start"
       },
       {
         "answer": "Зажечь факел и идти вперед",
-        "nextStep": "dead"
+        "nextStep": "win"
       }
-    ]
+    ],
+    "isTerminal": false,
+    "isWin" : false
   },
   "path": {
     "question": "На дороге вас встретили разбоиники, и угрожают расправой",
@@ -36,16 +40,20 @@
         "answer": "Начать битву",
         "nextStep": "dead"
       }
-    ]
+    ],
+    "isTerminal": false,
+    "isWin" : false
   },
   "dead": {
     "question": "вы умерли",
-    "choices": [
-      {
-        "answer": "начать заново",
-        "nextStep": "start"
-      }
-
-    ]
+    "choices": [],
+    "isTerminal": true,
+    "isWin" : false
+  },
+  "win": {
+    "question": "вы нашли подземный город эльфов и они приняли вас за божество , по древнему эльфийскому пророчеству. ",
+    "choices": [],
+    "isTerminal": true,
+    "isWin" : true
   }
 }

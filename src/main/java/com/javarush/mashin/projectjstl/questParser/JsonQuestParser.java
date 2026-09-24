@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonQuestParser {
+public class JsonQuestParser implements QuestParser {
 	private final Map<String , Map<String, QuestionDTO>> questCash = new HashMap<>();
 	public Map<String , QuestionDTO> getQuest(String questName) {
 		if(questCash.containsKey(questName)) {
