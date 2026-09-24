@@ -3,12 +3,10 @@ package com.javarush.mashin.projectjstl.questParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
-import com.javarush.mashin.projectjstl.entity.QuestDTO;
 import com.javarush.mashin.projectjstl.entity.QuestionDTO;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import com.javarush.mashin.projectjstl.settings.Constants;
 import com.javarush.mashin.projectjstl.workers.AppConfig;
-import org.apache.taglibs.standard.extra.spath.Step;
 
 import java.io.IOException;
 import java.io.InputStream;
