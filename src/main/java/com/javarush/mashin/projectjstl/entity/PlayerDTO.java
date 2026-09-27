@@ -19,7 +19,7 @@ public class PlayerDTO {
 	}
 
 	public void addQuestLose() {
-		this.questLose +=1;
+		this.questLose += 1;
 	}
 
 	public int getQuestPlayed() {

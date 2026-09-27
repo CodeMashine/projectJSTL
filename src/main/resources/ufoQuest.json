@@ -1,0 +1,72 @@
+{
+  "start": {
+    "question": "Ты потерял память, принять вызов НЛО?",
+    "choices": [
+      {
+        "answer": "Отклонить вызов",
+        "nextStep": "reject"
+      },
+      {
+        "answer": "Принять вызов",
+        "nextStep": "accept"
+      }
+    ],
+    "isTerminal": false,
+    "isWin": false
+  },
+  "reject": {
+    "question": "Ты отклонил вызов , умер в муках при экспериментах",
+    "choices": [
+    ],
+    "isTerminal": true,
+    "isWin": false
+  },
+  "accept": {
+    "question": "Ты принял вызов , поднимешься на мостик к капитану?",
+    "choices": [
+      {
+        "answer": "Идти на мостик",
+        "nextStep": "goToBridge"
+      },
+      {
+        "answer": "Отказаться подниматься на мостик",
+        "nextStep": "rejectGoToBridge"
+      }
+    ],
+    "isTerminal": false,
+    "isWin": false
+  },
+  "rejectGoToBridge": {
+    "question": "Ты отказался идти мостик к капитану! И тебя выбросили за борт",
+    "choices": [],
+    "isTerminal": true,
+    "isWin": false
+  },
+  "goToBridge": {
+    "question": "Ты поднялся на мостик , начался допрос.",
+    "choices": [
+      {
+        "answer": "Рассказать правду",
+        "nextStep": "tellTruth"
+      },
+      {
+        "answer": "Соврать о себе",
+        "nextStep": "lie"
+      }
+    ],
+    "isTerminal": false,
+    "isWin": false
+  },
+  "lie": {
+    "question": "Они же телепаты , раскусили ложь и сварили твои мозги",
+    "choices": [],
+    "isTerminal": true,
+    "isWin": false
+  },
+  "tellTruth": {
+    "question": "Выслушали рассказ и отпустили.",
+    "choices": [],
+    "isTerminal": true,
+    "isWin": true
+  }
+}

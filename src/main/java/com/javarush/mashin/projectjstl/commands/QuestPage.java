@@ -1,37 +1,40 @@
 package com.javarush.mashin.projectjstl.commands;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.entity.QuestionDTO;
 import com.javarush.mashin.projectjstl.entity.PlayerDTO;
 import com.javarush.mashin.projectjstl.questParser.JsonQuestParser;
 import com.javarush.mashin.projectjstl.questParser.QuestParser;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 import java.util.Map;
 
 public class QuestPage implements Command {
 
-	private QuestParser jsonQuestParser = BeanFactory.getBean(JsonQuestParser.class);
+	private QuestParser questParser = BeanFactory.getBean(JsonQuestParser.class);
 
 	@Override
 	public String doGet(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 
 		String questName = getOrDefaultQuestName(req);
-		String currentStep = getOrDefaultQuestStep(req);
+		String nextStep = getOrDefaultQuestStep(req);
+		String prevStep = (String) session.getAttribute("currentStep");
 		PlayerDTO player = getOrCreatePlayer(req, session);
 
-		Map<String, QuestionDTO> quest = jsonQuestParser.getQuest(questName);
-		QuestionDTO questionDTO = quest.get(currentStep);
+		Map<String, QuestionDTO> quest = questParser.getQuest(questName);
+		QuestionDTO questionDTO = quest.get(nextStep);
 
-		checkWin(questionDTO, player);
+		if (!nextStep.equals(prevStep)) {
+			countOutcome(questionDTO, player);
+		}
 
 		session.setAttribute("quest", questName);
-		session.setAttribute("currentStep", currentStep);
+		session.setAttribute("currentStep", nextStep);
 		session.setAttribute("player", player);
 		req.setAttribute("question", questionDTO);
-		return null;
+		return getView();
 	}
 
 	private String getOrDefaultQuestStep(HttpServletRequest req) {
@@ -64,11 +67,10 @@ public class QuestPage implements Command {
 			player = new PlayerDTO();
 			player.setName(playerName);
 		}
-
 		return player;
 	}
 
-	private void checkWin(QuestionDTO questionDTO, PlayerDTO player) {
+	private void countOutcome(QuestionDTO questionDTO, PlayerDTO player) {
 		if (questionDTO.isTerminal() && questionDTO.isWin()) {
 			player.addQuestWin();
 			player.addQuestPlayed();
@@ -77,6 +79,4 @@ public class QuestPage implements Command {
 			player.addQuestPlayed();
 		}
 	}
-
-
 }

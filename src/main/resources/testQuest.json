@@ -34,7 +34,7 @@
     "choices": [
       {
         "answer": "Попытаться бежать",
-        "nextStep": "dead"
+        "nextStep": "start"
       },
       {
         "answer": "Начать битву",
@@ -45,13 +45,13 @@
     "isWin" : false
   },
   "dead": {
-    "question": "вы умерли",
+    "question": "Вы умерли",
     "choices": [],
     "isTerminal": true,
     "isWin" : false
   },
   "win": {
-    "question": "вы нашли подземный город эльфов и они приняли вас за божество , по древнему эльфийскому пророчеству. ",
+    "question": "Вы нашли подземный город эльфов и они приняли вас за божество",
     "choices": [],
     "isTerminal": true,
     "isWin" : true

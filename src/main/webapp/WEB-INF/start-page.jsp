@@ -4,47 +4,38 @@
 <html>
 <head>
     <title>JSP - Hello World</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<form class="form-horizontal" action="${pageContext.request.contextPath}/quest-page" method="get">
-    <fieldset>
-        <!-- Form Name -->
-        <legend>Quest Game</legend>
-        <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Name">Name</label>
-                <div class="col-md-4">
-                    <input id="Name" name="playerName" type="text" placeholder="input name"
-                           class="form-control input-md" value="${sessionScope.player.getName()}" required>
 
-                </div>
-            </div>
-        <!-- Select Basic -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="">Select Quest</label>
-            <div class="col-md-4">
-                <select id="" name="quest" class="form-control">
-                    <option value="testQuest">Test quest</option>
-                </select>
-            </div>
-        </div>
-        <!-- Button -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="button"></label>
-            <div class="col-md-4">
-                <button id="button" name="button" class="btn btn-primary">Start</button>
-            </div>
-        </div>
+<div class="header"> <h1> Добро пожаловать в квестовую игру</h1></div>
 
-    </fieldset>
+<form action="${pageContext.request.contextPath}/quest-page" method="get"
+      class="quest-form mx-auto">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input id="name" name="playerName" type="text"
+               class="form-control" placeholder="input name"
+               value="${sessionScope.player.getName()}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="quest" class="form-label">Select Quest</label>
+        <select id="quest" name="quest" class="form-select">
+            <option value="testQuest">Test quest</option>
+            <option value="ufoQuest">Ufo quest</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Start</button>
 </form>
 
 <c:if test="${sessionScope.player.getName()!=null}">
-    <div>
+    <div class="statistic mt-10 text-center">
         <ul>
             <p>Statistic</p>
             <li>Player name : "${sessionScope.player.getName()}"</li>

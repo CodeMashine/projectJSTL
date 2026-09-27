@@ -15,15 +15,13 @@ public interface Command {
 		return getView();
 	}
 
-	//"/WEB-INF/hello-world.jsp"
 	default String getView() {
 		String simpleName = this.getClass().getSimpleName();
 		simpleName = convertCamelCaseToKebabStyle(simpleName);
 		return simpleName;
 	}
 
-
-	 default String convertCamelCaseToKebabStyle(String string) {
+	default String convertCamelCaseToKebabStyle(String string) {
 		String snakeName = string.chars().mapToObj(s -> String.valueOf((char) s)).flatMap(
 				s -> s.matches("[A-Z]") ? Stream.of("-", s) : Stream.of(s)).collect(Collectors.joining()).toLowerCase();
 		return snakeName.startsWith("-") ? snakeName.substring(1) : snakeName;
