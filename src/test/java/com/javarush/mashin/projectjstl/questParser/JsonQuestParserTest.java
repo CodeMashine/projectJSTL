@@ -16,7 +16,6 @@ class JsonQuestParserTest {
 
 	private JsonQuestParser parser;
 
-
 	@BeforeEach
 	void setUp() {
 		parser = new JsonQuestParser();

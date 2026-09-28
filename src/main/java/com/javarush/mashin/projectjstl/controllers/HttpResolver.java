@@ -5,12 +5,12 @@ import com.javarush.mashin.projectjstl.commands.Command;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HttpResolver {
 
-	private final Map<String, Command> componentCash = new HashMap<>();
+	private final Map<String, Command> componentCash = new ConcurrentHashMap<>();
 
 	public Command resolve(HttpServletRequest req) {
 		String rawComponentName = req.getRequestURI();
@@ -28,7 +28,7 @@ public class HttpResolver {
 			componentCash.put(rawComponentName,command);
 			return command;
 		} catch (ClassNotFoundException e) {
-			throw new ProjectJSTLException(e);
+			throw new ProjectJSTLException("Requested Command class not found",e);
 		}
 	}
 

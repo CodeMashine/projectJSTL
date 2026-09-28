@@ -11,10 +11,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonQuestParser implements QuestParser {
-	private final Map<String, Map<String, QuestionDTO>> questCash = new ConcurrentHashMap<>();
+	private final Map<String, Map<String, QuestionDTO>> questCache = new ConcurrentHashMap<>();
 
 	public Map<String, QuestionDTO> getQuest(String questName) {
-		Map<String, QuestionDTO> quest = questCash.computeIfAbsent(questName, k -> parseJsonQuest(k));
+		Map<String, QuestionDTO> quest = questCache.computeIfAbsent(questName, k -> parseJsonQuest(k));
 		return quest;
 	}
 
