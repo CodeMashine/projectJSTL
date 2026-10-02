@@ -57,14 +57,11 @@ public class QuestPage implements Command {
 	private PlayerDTO getOrCreatePlayer(HttpServletRequest req, HttpSession session) {
 		PlayerDTO player = (PlayerDTO) session.getAttribute("player");
 		String playerName = req.getParameter("playerName");
-		if (player != null && playerName == null) {
-			return player;
-		} else if (player != null && playerName != null) {
-			player.setName(playerName);
-		}
 
 		if (player == null) {
 			player = new PlayerDTO();
+			player.setName(playerName);
+		}else{
 			player.setName(playerName);
 		}
 		return player;
