@@ -2,7 +2,7 @@ package com.javarush.mashin.projectjstl.controllers;
 
 import com.javarush.mashin.projectjstl.commands.Command;
 import com.javarush.mashin.projectjstl.commands.QuestPage;
-import com.javarush.mashin.projectjstl.commands.StartPage;
+import com.javarush.mashin.projectjstl.commands.Home;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ class HttpResolverTest {
 	private static final String ROOT_URL = "/";
 	private static final String UNKNOWN_URL = "/unknown";
 	private static final Class<QuestPage> CORRECT_COMMAND_RESPONSE = QuestPage.class;
-	private static final Class<StartPage> CORRECT_DEFAULT_RESPONSE = StartPage.class;
+	private static final Class<Home> CORRECT_DEFAULT_RESPONSE = Home.class;
 	private HttpResolver resolver;
 	private HttpServletRequest request;
 

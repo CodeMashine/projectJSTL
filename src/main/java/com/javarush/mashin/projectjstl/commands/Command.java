@@ -1,7 +1,6 @@
 package com.javarush.mashin.projectjstl.commands;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -11,7 +10,7 @@ public interface Command {
 		return getView();
 	}
 
-	default public String doPost(HttpServletRequest req, HttpServletResponse resp) {
+	default public String doPost(HttpServletRequest req) {
 		return getView();
 	}
 

@@ -1,36 +1,18 @@
-* {
-    margin: 0;
-    padding: 0;
+.hero {
+    background: url('../img/background-map.jpg') center/cover  no-repeat;
+    min-height: 500px;
 }
 
-li {
-    list-style: none;
-    padding-left: 0;
+.btn {
+    background-color: #7b2d26;
+    border-color: #7b2d26;
+    color: #f5e6c8;
+}
+.btn:hover {
+    background-color: #5c1f1a;
+    border-color: #5c1f1a;
 }
 
-body {
-    text-align: center;
-}
-
-.header, .description {
-    margin-top: 1em;
-}
-
-.quest-form {
-    max-width: 500px;
-    margin-top: 3rem;
-}
-
-.container {
-    max-width: 700px;
-}
-
-.statistic {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #f8f9fa;
-    padding: 1rem;
-    text-align: center;
+.footer , .header{
+    background: rgba(33, 37, 41, 0.7);
 }

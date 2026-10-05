@@ -14,7 +14,7 @@ public class BeanFactory {
 
 	private static final Map<Class<?>, Object> beanMap = new ConcurrentHashMap<>();
 
-	public static synchronized  <T> T getBean(Class<T> clazz) {
+	public static synchronized <T> T getBean(Class<T> clazz) {
 		if (!beanMap.containsKey(clazz)) {
 			Constructor<?> constructor = clazz.getConstructors()[0];
 			constructor.setAccessible(true);
@@ -29,9 +29,8 @@ public class BeanFactory {
 			} catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
 				throw new ProjectJSTLException("Create bean exception", e);
 			}
-
 		}
-			return (T) beanMap.get(clazz);
+		return (T) beanMap.get(clazz);
 	}
 
 }

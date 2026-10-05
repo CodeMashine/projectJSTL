@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.entity.QuestionDTO;
-import com.javarush.mashin.projectjstl.entity.PlayerDTO;
+import com.javarush.mashin.projectjstl.entity.UserDTO;
 import com.javarush.mashin.projectjstl.questParser.JsonQuestParser;
 import com.javarush.mashin.projectjstl.questParser.QuestParser;
 
@@ -12,7 +12,11 @@ import java.util.Map;
 
 public class QuestPage implements Command {
 
-	private QuestParser questParser = BeanFactory.getBean(JsonQuestParser.class);
+	private QuestParser questParser;
+
+	public QuestPage() {
+		this.questParser = BeanFactory.getBean(JsonQuestParser.class);
+	}
 
 	@Override
 	public String doGet(HttpServletRequest req) {
@@ -21,7 +25,7 @@ public class QuestPage implements Command {
 		String questName = getOrDefaultQuestName(req);
 		String nextStep = getOrDefaultQuestStep(req);
 		String prevStep = (String) session.getAttribute("currentStep");
-		PlayerDTO player = getOrCreatePlayer(req, session);
+		UserDTO player = getOrCreatePlayer(req, session);
 
 		Map<String, QuestionDTO> quest = questParser.getQuest(questName);
 		QuestionDTO questionDTO = quest.get(nextStep);
@@ -32,7 +36,7 @@ public class QuestPage implements Command {
 
 		session.setAttribute("quest", questName);
 		session.setAttribute("currentStep", nextStep);
-		session.setAttribute("player", player);
+		session.setAttribute("user", player);
 		req.setAttribute("question", questionDTO);
 		return getView();
 	}
@@ -54,20 +58,20 @@ public class QuestPage implements Command {
 		return questName;
 	}
 
-	private PlayerDTO getOrCreatePlayer(HttpServletRequest req, HttpSession session) {
-		PlayerDTO player = (PlayerDTO) session.getAttribute("player");
+	private UserDTO getOrCreatePlayer(HttpServletRequest req, HttpSession session) {
+		UserDTO player = (UserDTO) session.getAttribute("user");
 		String playerName = req.getParameter("playerName");
 
 		if (player == null) {
-			player = new PlayerDTO();
+			player = new UserDTO();
 			player.setName(playerName);
-		}else{
+		} else {
 			player.setName(playerName);
 		}
 		return player;
 	}
 
-	private void countOutcome(QuestionDTO questionDTO, PlayerDTO player) {
+	private void countOutcome(QuestionDTO questionDTO, UserDTO player) {
 		if (questionDTO.isTerminal() && questionDTO.isWin()) {
 			player.addQuestWin();
 			player.addQuestPlayed();

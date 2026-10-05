@@ -3,6 +3,7 @@ package com.javarush.mashin.projectjstl.controllers;
 import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.commands.Command;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
+import com.javarush.mashin.projectjstl.util.Urls;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
@@ -17,7 +18,7 @@ public class HttpResolver {
 		if(componentCash.containsKey(rawComponentName)) {
 			return componentCash.get(rawComponentName);
 		}
-		String componentName = rawComponentName.equals("/") ? "/start-page" : rawComponentName;
+		String componentName = rawComponentName.equals("/") ? Urls.HOME : rawComponentName;
 		componentName = componentName.split("[/?#]")[1].replace("/", "");
 		String simpleName = convertKebabStyleToCamelCase(componentName);
 		String componentPackage = Command.class.getPackageName();

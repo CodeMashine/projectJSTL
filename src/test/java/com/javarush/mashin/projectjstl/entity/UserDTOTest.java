@@ -5,45 +5,45 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerDTOTest {
+class UserDTOTest {
 	private static final int EXPECTED = 5;
 
-	private PlayerDTO playerDTO;
+	private UserDTO userDTO;
 
 	@BeforeEach
 	void setUp() {
-		playerDTO = new PlayerDTO();
+		userDTO = new UserDTO();
 	}
 
 	@Test
 	void checkStartState() {
-		assertEquals(0 , playerDTO.getQuestWin());
-		assertEquals(0 , playerDTO.getQuestLose());
-		assertEquals(0 , playerDTO.getQuestPlayed());
+		assertEquals(0 , userDTO.getQuestWin());
+		assertEquals(0 , userDTO.getQuestLose());
+		assertEquals(0 , userDTO.getQuestPlayed());
 	}
 
 	@Test
 	void getQuestLose() {
 		for (int i = 0; i < EXPECTED; i++) {
-			playerDTO.addQuestLose();
+			userDTO.addQuestLose();
 		}
-		assertEquals(EXPECTED, playerDTO.getQuestLose());
+		assertEquals(EXPECTED, userDTO.getQuestLose());
 	}
 
 	@Test
 	void getQuestPlayed() {
 		for (int i = 0; i < EXPECTED; i++) {
-			playerDTO.addQuestPlayed();
+			userDTO.addQuestPlayed();
 		}
-		assertEquals(EXPECTED, playerDTO.getQuestPlayed());
+		assertEquals(EXPECTED, userDTO.getQuestPlayed());
 	}
 
 	@Test
 	void getQuestWin() {
 		for (int i = 0; i < EXPECTED; i++) {
-			playerDTO.addQuestWin();
+			userDTO.addQuestWin();
 		}
-		assertEquals(EXPECTED, playerDTO.getQuestWin());
+		assertEquals(EXPECTED, userDTO.getQuestWin());
 	}
 
 }
