@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <nav class="navbar navbar-expand-md bg-dark py-3 header" data-bs-theme="dark">
-    <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
+    <div class="container"><a class="navbar-brand d-flex align-items-center"  href="/"><span
             class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg
             class="bi bi-bezier" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
             viewBox="0 0 16 16">
@@ -15,19 +15,15 @@
         <div class="collapse navbar-collapse" id="navcol-5">
             <c:if test="${sessionScope.user != null}">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="">Create quest</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">Statistic</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/statistic">Statistic</a></li>
                 </ul>
                 <span class="navbar-text text-white ms-3 me-3" data-bs-theme="dark">
                     ${sessionScope.user.getName()}
                 </span>
                 <a class="btn btn-primary ms-md-2 btn-outline-light btn-sm" role="button" href="/log-out">Log out</a>
             </c:if>
-
-<%--            <c:if test="${sessionScope.user == null}">--%>
-<%--                <a class="btn btn-primary ms-md-2" role="button" href="/log-in">Log in</a>--%>
-<%--                <a class="btn btn-primary ms-md-2" role="button" href="/sign-up">Sign up</a>--%>
-<%--            </c:if>--%>
         </div>
     </div>
 </nav>

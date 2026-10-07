@@ -3,8 +3,11 @@ package com.javarush.mashin.projectjstl.service;
 import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.entity.ROLE;
 import com.javarush.mashin.projectjstl.entity.UserDTO;
+import com.javarush.mashin.projectjstl.entity.UserViewDTO;
 import com.javarush.mashin.projectjstl.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserService {
@@ -31,7 +34,7 @@ public class UserService {
 		return userRepo.getByName(name);
 	}
 
-	public boolean authenticate(String name , String password) {
+	public boolean authenticate(String name, String password) {
 		UserDTO user = userRepo.getByName(name);
 		if (user == null) {
 			return false;
@@ -39,9 +42,17 @@ public class UserService {
 		return user.checkPassword(password);
 	}
 
+	public synchronized List<UserViewDTO> getUsersStatistic() {
+		ArrayList<UserViewDTO> usersStatistic = new ArrayList<>();
+		for (UserDTO user : userRepo.getAll()) {
+			usersStatistic.add(UserViewDTO.from(user));
+		}
+		return usersStatistic;
+	}
+
 	private void startFillUserRepository() {
 		for (int i = 0; i < 3; i++) {
-			createUser(i + "", "123", i % 2 == 0 ? ROLE.USER : ROLE.ADMIN);
+			createUser("User " + i, "123", i % 2 == 0 ? ROLE.USER : ROLE.ADMIN);
 		}
 	}
 }

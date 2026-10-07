@@ -12,23 +12,18 @@ public class SignUp implements Command {
 
 	private UserService userService;
 
-//	public SignUp() {}
-//
-	public SignUp(){
+	public SignUp() {
 		userService = BeanFactory.getBean(UserService.class);
 	}
-
 
 	@Override
 	public String doPost(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String username = req.getParameter("name");
 		String password = req.getParameter("password");
-
-		String rawRole  = req.getParameter("role");
+		String rawRole = req.getParameter("role");
 		ROLE role = ROLE.valueOf(rawRole.toUpperCase());
-
-		UserDTO user = userService.createUser(username,password,role);
+		UserDTO user = userService.createUser(username, password, role);
 
 		session.setAttribute("user", user);
 		session.setAttribute("haveLoginUser", true);

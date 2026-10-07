@@ -1,5 +1,5 @@
 .hero {
-    background: url('../img/background-map.jpg') center/cover  no-repeat;
+    background: url('../img/background-map.jpg') center/cover no-repeat;
     min-height: 500px;
 }
 
@@ -8,11 +8,21 @@
     border-color: #7b2d26;
     color: #f5e6c8;
 }
+
 .btn:hover {
     background-color: #5c1f1a;
     border-color: #5c1f1a;
 }
 
-.footer , .header{
+.footer, .header {
     background: rgba(33, 37, 41, 0.7);
+}
+
+.table,
+.table > :not(caption) > * > * {
+    background-color: transparent;
+}
+
+.question {
+    min-height: 120px;
 }

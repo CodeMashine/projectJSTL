@@ -1,5 +1,6 @@
 package com.javarush.mashin.projectjstl.commands;
 
+import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
@@ -25,7 +26,7 @@ public class QuestPage implements Command {
 		String questName = getOrDefaultQuestName(req);
 		String nextStep = getOrDefaultQuestStep(req);
 		String prevStep = (String) session.getAttribute("currentStep");
-		UserDTO player = getOrCreatePlayer(req, session);
+		UserDTO player = getUser(req, session);
 
 		Map<String, QuestionDTO> quest = questParser.getQuest(questName);
 		QuestionDTO questionDTO = quest.get(nextStep);
@@ -36,7 +37,6 @@ public class QuestPage implements Command {
 
 		session.setAttribute("quest", questName);
 		session.setAttribute("currentStep", nextStep);
-		session.setAttribute("user", player);
 		req.setAttribute("question", questionDTO);
 		return getView();
 	}
@@ -49,35 +49,31 @@ public class QuestPage implements Command {
 		return currentStep;
 	}
 
-	// form in HTML is select , and this data is required
+	// need maybe
 	private String getOrDefaultQuestName(HttpServletRequest req) {
 		String questName = req.getParameter("quest");
 		if (questName == null) {
-			questName = "testQuest";
+			questName = "elfQuest";
 		}
 		return questName;
 	}
 
-	private UserDTO getOrCreatePlayer(HttpServletRequest req, HttpSession session) {
-		UserDTO player = (UserDTO) session.getAttribute("user");
-		String playerName = req.getParameter("playerName");
-
-		if (player == null) {
-			player = new UserDTO();
-			player.setName(playerName);
-		} else {
-			player.setName(playerName);
+	// maybe need send exception on front
+	private UserDTO getUser(HttpServletRequest req, HttpSession session) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		if (user == null) {
+			throw new ProjectJSTLException("User not found");
 		}
-		return player;
+		return user;
 	}
 
-	private void countOutcome(QuestionDTO questionDTO, UserDTO player) {
+	private void countOutcome(QuestionDTO questionDTO, UserDTO user) {
 		if (questionDTO.isTerminal() && questionDTO.isWin()) {
-			player.addQuestWin();
-			player.addQuestPlayed();
+			user.addQuestWin();
+			user.addQuestPlayed();
 		} else if (questionDTO.isTerminal() && !questionDTO.isWin()) {
-			player.addQuestLose();
-			player.addQuestPlayed();
+			user.addQuestLose();
+			user.addQuestPlayed();
 		}
 	}
 }

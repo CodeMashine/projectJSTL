@@ -27,9 +27,9 @@
                                 </svg>
                             </div>
                             <div class="mb-3"><input class="form-control" type="text" name="name"
-                                                     placeholder="Name" required></div>
+                                                     placeholder="Name" value="User 1" required></div>
                             <div class="mb-3"><input class="form-control" type="password" name="password"
-                                                     placeholder="Password" required></div>
+                                                     placeholder="Password" value="123" required></div>
                             <div class="mb-3">
                                 <button class="btn btn-primary d-block w-100" type="submit">Log in</button>
                             </div>

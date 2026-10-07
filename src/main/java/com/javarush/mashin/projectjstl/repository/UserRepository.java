@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserRepository implements Repository<UserDTO> {
 	private final Map<Integer, UserDTO> users = new ConcurrentHashMap<>();
 
-	public List<UserDTO> getAll(){
+	public List<UserDTO> getAll() {
 		return new ArrayList<>(users.values());
 	}
 
@@ -31,6 +31,7 @@ public class UserRepository implements Repository<UserDTO> {
 	public synchronized void add(UserDTO user) {
 		users.put(user.getId(), user);
 	}
+
 	public synchronized UserDTO remove(int id) {
 		UserDTO player = users.get(id);
 		users.remove(id);

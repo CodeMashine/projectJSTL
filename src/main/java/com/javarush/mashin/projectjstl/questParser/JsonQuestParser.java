@@ -19,17 +19,17 @@ public class JsonQuestParser implements QuestParser {
 	}
 
 	private Map<String, QuestionDTO> parseJsonQuest(String questName) {
-		String jsonQuestName = questName + ".json";
+		String jsonQuestName = "quests/" + questName + ".json";
 		ObjectMapper objectMapper = new ObjectMapper();
 		try (InputStream input = getClass().getClassLoader().getResourceAsStream(jsonQuestName)) {
 			if (input == null) {
-				throw new ProjectJSTLException("Файл не найден в classpath: " + jsonQuestName);
+				throw new ProjectJSTLException("File not found in classpath: " + jsonQuestName);
 			}
 			Map<String, QuestionDTO> questDTO = objectMapper.readValue(input, new TypeReference<>() {});
 			return questDTO;
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new ProjectJSTLException("Ошибка чтения файла квеста " + jsonQuestName, e);
+			throw new ProjectJSTLException("Error quest read " + jsonQuestName, e);
 		}
 	}
 }

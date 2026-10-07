@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+// Class maybe needed in work with on Data Base
 public class QuestCatalogDTO {
 	private Map<String ,QuestDTO > quests= new HashMap<>();
 

@@ -21,7 +21,6 @@ public class LogIn implements Command {
 		HttpSession session = req.getSession();
 
 		boolean isLogIn = userService.authenticate(name , password);
-
 		req.setAttribute("isLogIn", isLogIn);
 
 		if (isLogIn) {

@@ -7,22 +7,26 @@
             </div>
         </div>
         <div class="row gy-4 row-cols-1 row-cols-md-2">
+
             <div class="col">
                 <div class="d-flex flex-column">
                     <div class="text-center px-lg-4 py-4 py-lg-0">
-                        <h4>Quest 1</h4>
-                        <p>quest 1 description</p>
+                        <h4>Elf Quest</h4>
+                        <p>Elf quest description</p>
                     </div>
-                    <button class="btn btn-primary btn-sm" type="button">Play</button>
+                    <a href="${pageContext.request.contextPath}/quest-page?quest=elfQuest&currentStep=start"
+                       class="btn btn-primary btn-sm">Play</a>
                 </div>
             </div>
+
             <div class="col">
                 <div class="d-flex flex-column">
                     <div class="text-center px-lg-4 py-4 py-lg-0">
-                        <h4>Quest 2</h4>
-                        <p>quest 2 description</p>
+                        <h4>Ufo quest</h4>
+                        <p>Quest about Ufo</p>
                     </div>
-                    <button class="btn btn-primary btn-sm" type="button">Play</button>
+                    <a href="${pageContext.request.contextPath}/quest-page?quest=ufoQuest&currentStep=start"
+                       class="btn btn-primary btn-sm">Play</a>
                 </div>
             </div>
             <div class="col">

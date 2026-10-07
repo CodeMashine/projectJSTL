@@ -1,7 +1,5 @@
 package com.javarush.mashin.projectjstl.entity;
 
-import javax.management.relation.Role;
-
 public class UserDTO {
 	private int id;
 	private String name;
@@ -18,7 +16,6 @@ public class UserDTO {
 		this.password = password;
 		this.role = role;
 	}
-
 
 	public int getId() {
 		return id;
