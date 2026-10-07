@@ -1,0 +1,59 @@
+{
+  "start": {
+    "question": "Вы стоите перед развилкой. Куда пойдете?",
+    "choices": [
+      {
+        "answer": "В темную пещеру",
+        "nextStep": "cave"
+      },
+      {
+        "answer": "По залитой солнцем тропинке",
+        "nextStep": "path"
+      }
+    ],
+    "isTerminal": false,
+    "isWin" : false
+  },
+  "cave": {
+    "question": "В пещере темно, вы слышите шорох...",
+    "choices": [
+      {
+        "answer": "Развернутся и отступить",
+        "nextStep": "start"
+      },
+      {
+        "answer": "Зажечь факел и идти вперед",
+        "nextStep": "win"
+      }
+    ],
+    "isTerminal": false,
+    "isWin" : false
+  },
+  "path": {
+    "question": "На дороге вас встретили разбоиники, и угрожают расправой",
+    "choices": [
+      {
+        "answer": "Попытаться бежать",
+        "nextStep": "start"
+      },
+      {
+        "answer": "Начать битву",
+        "nextStep": "dead"
+      }
+    ],
+    "isTerminal": false,
+    "isWin" : false
+  },
+  "dead": {
+    "question": "Вы умерли",
+    "choices": [],
+    "isTerminal": true,
+    "isWin" : false
+  },
+  "win": {
+    "question": "Вы нашли подземный город эльфов и они приняли вас за божество",
+    "choices": [],
+    "isTerminal": true,
+    "isWin" : true
+  }
+}
