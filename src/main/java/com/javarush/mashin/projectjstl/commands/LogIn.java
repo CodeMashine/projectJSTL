@@ -8,7 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 public class LogIn implements Command {
-	UserService userService ;
+	UserService userService;
+
 	public LogIn() {
 		userService = BeanFactory.getBean(UserService.class);
 	}
@@ -20,7 +21,7 @@ public class LogIn implements Command {
 		String password = req.getParameter("password");
 		HttpSession session = req.getSession();
 
-		boolean isLogIn = userService.authenticate(name , password);
+		boolean isLogIn = userService.authenticate(name, password);
 		req.setAttribute("isLogIn", isLogIn);
 
 		if (isLogIn) {

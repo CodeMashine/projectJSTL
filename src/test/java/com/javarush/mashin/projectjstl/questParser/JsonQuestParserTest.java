@@ -10,7 +10,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonQuestParserTest {
-	private static final String TEST_QUEST = "testQuest";
+	private static final String TEST_QUEST = "ElfQuest";
 	private static final String UNKNOWN_QUEST = "unknownQuest";
 	private static final String START_QUEST = "start";
 

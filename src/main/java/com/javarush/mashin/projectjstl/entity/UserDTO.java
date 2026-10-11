@@ -25,6 +25,10 @@ public class UserDTO {
 		return name;
 	}
 
+	public ROLE getRole() {
+		return role;
+	}
+
 	public boolean checkPassword(String raw){
 		return password.equals(raw);
 	}

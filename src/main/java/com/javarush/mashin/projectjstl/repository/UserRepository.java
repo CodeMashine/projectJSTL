@@ -33,8 +33,8 @@ public class UserRepository implements Repository<UserDTO> {
 	}
 
 	public synchronized UserDTO remove(int id) {
-		UserDTO player = users.get(id);
+		UserDTO user = users.get(id);
 		users.remove(id);
-		return player;
+		return user;
 	}
 }
