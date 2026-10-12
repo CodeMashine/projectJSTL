@@ -19,6 +19,11 @@ public class UserService {
 		startFillUserRepository();
 	}
 
+	public UserService(UserRepository userRepo) {
+		this.userRepo = userRepo;
+		startFillUserRepository();
+	}
+
 	public synchronized UserDTO createUser(String name, String password, ROLE role) {
 		Integer userId = userCounter.incrementAndGet();
 		UserDTO newUser = new UserDTO(userId, name, password, role);
