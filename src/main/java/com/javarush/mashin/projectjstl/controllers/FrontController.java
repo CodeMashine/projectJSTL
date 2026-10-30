@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet({Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN, Urls.STATISTIC})
+@WebServlet({Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN, Urls.STATISTIC , Urls.EDIT_PROFILE})
 public class FrontController extends HttpServlet {
 	private final HttpResolver httpResolver = BeanFactory.getBean(HttpResolver.class);
 

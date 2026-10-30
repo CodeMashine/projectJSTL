@@ -12,8 +12,9 @@ public class SignUp implements Command {
 
 	private UserService userService;
 
-	public SignUp() {
-		userService = BeanFactory.getBean(UserService.class);
+	public SignUp(UserService userService) {
+		this.userService = userService;
+//		userService = BeanFactory.getBean(UserService.class);
 	}
 
 	@Override

@@ -9,8 +9,9 @@ import java.util.List;
 
 public class Statistic implements Command {
 	UserService userService;
-	public Statistic() {
-		userService = BeanFactory.getBean(UserService.class);
+	public Statistic(UserService userService) {
+		this.userService = userService;
+//		userService = BeanFactory.getBean(UserService.class);
 	}
 
 	@Override

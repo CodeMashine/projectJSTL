@@ -21,7 +21,7 @@ public class BeanFactory {
 			Class<?>[] parameterTypes = constructor.getParameterTypes();
 			Object[] parameters = new Object[parameterTypes.length];
 			for (int i = 0; i < parameterTypes.length; i++) {
-				parameters[i] = beanMap.getBean(parameterTypes[i]);
+				parameters[i] = getBean(parameterTypes[i]);
 			}
 
 			try {

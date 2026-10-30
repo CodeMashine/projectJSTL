@@ -60,4 +60,10 @@ public class UserService {
 			createUser("User " + i, "123", i % 2 == 0 ? ROLE.USER : ROLE.ADMIN);
 		}
 	}
+
+	public UserDTO updateUser(int id, String username) {
+		UserDTO user = userRepo.getById(id);
+		user.setName(username);
+		return user;
+	}
 }

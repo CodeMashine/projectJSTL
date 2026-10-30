@@ -20,6 +20,7 @@
                         <li class="nav-item"><a class="nav-link" href="">Create quest</a></li>
                     </c:if>
                     <li class="nav-item"><a class="nav-link" href="/statistic">Statistic</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/edit-profile">Edit profile</a></li>
                 </ul>
                 <span class="navbar-text text-white ms-3 me-3" data-bs-theme="dark">
                         ${sessionScope.user.getName()}

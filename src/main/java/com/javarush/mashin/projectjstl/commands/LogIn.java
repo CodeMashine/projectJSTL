@@ -10,8 +10,9 @@ import jakarta.servlet.http.HttpSession;
 public class LogIn implements Command {
 	UserService userService;
 
-	public LogIn() {
-		userService = BeanFactory.getBean(UserService.class);
+	public LogIn(UserService userService) {
+		this.userService = userService;
+//		userService = BeanFactory.getBean(UserService.class);
 	}
 
 

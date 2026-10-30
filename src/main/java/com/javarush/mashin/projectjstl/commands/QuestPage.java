@@ -15,8 +15,9 @@ public class QuestPage implements Command {
 
 	private QuestParser questParser;
 
-	public QuestPage() {
-		this.questParser = BeanFactory.getBean(JsonQuestParser.class);
+	public QuestPage(JsonQuestParser questParser) {
+		this.questParser = questParser;
+//		this.questParser = BeanFactory.getBean(JsonQuestParser.class);
 	}
 
 	@Override
