@@ -14,11 +14,6 @@ public class UserService {
 	private UserRepository userRepo;
 	private AtomicInteger userCounter = new AtomicInteger(0);
 
-	public UserService() {
-		this.userRepo = BeanFactory.getBean(UserRepository.class);
-		startFillUserRepository();
-	}
-
 	public UserService(UserRepository userRepo) {
 		this.userRepo = userRepo;
 		startFillUserRepository();

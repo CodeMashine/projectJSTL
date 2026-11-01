@@ -28,9 +28,9 @@
                             </div>
 
                             <div class=""><input type="hidden" name="id"
-                                                 value="${sessionScope.user.getId()}"></div>
+                                                 value="${requestScope.userToEdit.getId()}"></div>
                             <div class="mb-3"><input class="form-control" type="text" name="name"
-                                                     placeholder="Name" value="${sessionScope.user.getName()}" required>
+                                                     placeholder="Name" value="${requestScope.userToEdit.getName()}" required>
                             </div>
 
                             <div class="mb-3">

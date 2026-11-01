@@ -15,14 +15,26 @@ public class EditProfile implements Command {
 	}
 
 	@Override
+	public String doGet(HttpServletRequest req) {
+		int id = Integer.parseInt(req.getParameter("id"));
+		UserDTO user = userService.getUser(id);
+		req.setAttribute("userToEdit", user);
+		return getView();
+	}
+
+	@Override
 	public String doPost(HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		int id = Integer.parseInt(req.getParameter("id"));
+		int idToEdit = Integer.parseInt(req.getParameter("id"));
+		UserDTO currentUser = (UserDTO)session.getAttribute("user");
+		int currentId = currentUser.getId();
 		String username = req.getParameter("name");
-		UserDTO user = userService.updateUser(id,username);
+		UserDTO editedUser = userService.updateUser(idToEdit,username);
 
-		session.setAttribute("user", user);
-		session.setAttribute("haveLoginUser", true);
+		if(currentId == editedUser.getId()) {
+			session.setAttribute("user", editedUser);
+		}
+		req.setAttribute("userToEdit", editedUser);
 		return this.getView();
 	}
 }
