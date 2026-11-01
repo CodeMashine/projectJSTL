@@ -61,4 +61,8 @@ public class UserService {
 		user.setName(username);
 		return user;
 	}
+
+	public void deleteUserById(int idToDel) {
+		userRepo.deleteById(idToDel);
+	}
 }

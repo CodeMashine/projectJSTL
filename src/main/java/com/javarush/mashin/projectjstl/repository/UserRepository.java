@@ -37,4 +37,8 @@ public class UserRepository implements Repository<UserDTO> {
 		users.remove(id);
 		return user;
 	}
+
+	public void deleteById(int idToDel) {
+		users.remove(idToDel);
+	}
 }

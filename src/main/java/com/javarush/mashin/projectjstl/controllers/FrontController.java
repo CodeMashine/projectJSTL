@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet({Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN, Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.EDIT_USERS})
+@WebServlet({Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN, Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.EDIT_USERS, Urls.DELETE_PROFILE})
 public class FrontController extends HttpServlet {
 	private final HttpResolver httpResolver = BeanFactory.getBean(HttpResolver.class);
 
@@ -34,6 +34,14 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Command command = httpResolver.resolve(req);
 		String componentPath = command.doPost(req);
+
+		if (componentPath.startsWith("redirect:")) {
+			String redirectPath = componentPath.substring("redirect:".length());
+			resp.setStatus(200);
+			resp.sendRedirect(req.getContextPath() + getJsp(redirectPath));
+			return;
+		}
+
 		String jsp = getJsp(componentPath);
 		req.getRequestDispatcher(jsp).forward(req, resp);
 	}

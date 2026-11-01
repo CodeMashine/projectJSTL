@@ -13,7 +13,7 @@
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-5"><span
                 class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-5">
-            <c:if test="${sessionScope.user != null}">
+            <c:if test="${not empty sessionScope.user}">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                     <c:if test="${sessionScope.user.getRole().toString()=='ADMIN'}">

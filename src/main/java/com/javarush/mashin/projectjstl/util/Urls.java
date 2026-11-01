@@ -18,4 +18,5 @@ public class Urls {
 	public static final String QUEST_PAGE = "/quest-page";
 	public static final String EDIT_PROFILE = "/edit-profile";
 	public static final String EDIT_USERS = "/edit-users";
+	public static final String DELETE_PROFILE = "/delete-profile";
 }
