@@ -42,6 +42,6 @@
 </section>
 
 <jsp:include page="/WEB-INF/footer.jsp"/>
-<script src="${pageContext.request.contextPath}/script/script.js"></script>
+<script src="${pageContext.request.contextPath}/script/deleteUserResponce.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                     <c:if test="${sessionScope.user.getRole().toString()=='ADMIN'}">
-                        <li class="nav-item"><a class="nav-link" href="">Create quest</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/quest-editor">Create quest</a></li>
                         <li class="nav-item"><a class="nav-link" href="/edit-users">All users</a></li>
                     </c:if>
                     <li class="nav-item"><a class="nav-link" href="/statistic">Statistic</a></li>

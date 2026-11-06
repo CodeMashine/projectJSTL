@@ -15,15 +15,18 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebFilter({ Urls.LOGOUT, Urls.STATISTIC, Urls.QUEST_PAGE, Urls.EDIT_USERS, Urls.EDIT_PROFILE})
+@WebFilter({ Urls.LOGOUT, Urls.STATISTIC, Urls.QUEST_PAGE, Urls.EDIT_USERS, Urls.EDIT_PROFILE,Urls.QUEST_EDITOR})
 
+// фильтр обрабатывает не все ендпоинты
 public class AuthorizationFilter extends HttpFilter {
 	private final Map<ROLE, List<String>> permissions = Map.of(ROLE.GUEST,
-			List.of(Urls.HOME, Urls.LOGIN, Urls.SIGNUP, Urls.STATISTIC), ROLE.USER,
+			List.of(Urls.HOME, Urls.LOGIN, Urls.SIGNUP, Urls.STATISTIC),
+			ROLE.USER,
 			List.of(Urls.HOME, Urls.LOGIN, Urls.SIGNUP, Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.LOGOUT,
-					Urls.QUEST_PAGE), ROLE.ADMIN,
+					Urls.QUEST_PAGE),
+			ROLE.ADMIN,
 			List.of(Urls.HOME, Urls.LOGIN, Urls.SIGNUP, Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.LOGOUT, Urls.EDIT_USERS,
-					Urls.QUEST_PAGE));
+					Urls.QUEST_PAGE,Urls.QUEST_EDITOR));
 
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {

@@ -12,7 +12,7 @@ deleteBtns.forEach(btn => {
             if (response.ok) {
                 window.location.reload();
             } else {
-                alert('Ошибка при удалении');
+                alert('Delete fault');
             }
         }
     });
