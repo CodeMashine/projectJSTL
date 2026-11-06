@@ -21,7 +21,7 @@
                         <li class="nav-item"><a class="nav-link" href="/edit-users">All users</a></li>
                     </c:if>
                     <li class="nav-item"><a class="nav-link" href="/statistic">Statistic</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/edit-profile?id=${user.getId()}">Edit profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/edit-profile?id=${sessionScope.user.getId()}">Edit profile</a></li>
                 </ul>
                 <span class="navbar-text text-white ms-3 me-3" data-bs-theme="dark">
                         ${sessionScope.user.getName()}
