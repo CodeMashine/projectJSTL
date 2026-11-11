@@ -3,10 +3,9 @@ package com.javarush.mashin.projectjstl.commands;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.entity.QuestionDTO;
 import com.javarush.mashin.projectjstl.entity.UserDTO;
-import com.javarush.mashin.projectjstl.questParser.JsonQuestParser;
+import com.javarush.mashin.projectjstl.questParser.JsonFromMemoryQuestParser;
 import com.javarush.mashin.projectjstl.questParser.QuestParser;
 
 import java.util.Map;
@@ -15,9 +14,8 @@ public class QuestPage implements Command {
 
 	private QuestParser questParser;
 
-	public QuestPage(JsonQuestParser questParser) {
+	public QuestPage(JsonFromMemoryQuestParser questParser) {
 		this.questParser = questParser;
-//		this.questParser = BeanFactory.getBean(JsonQuestParser.class);
 	}
 
 	@Override
@@ -55,6 +53,7 @@ public class QuestPage implements Command {
 		String questName = req.getParameter("quest");
 		if (questName == null) {
 			questName = "elfQuest";
+
 		}
 		return questName;
 	}
@@ -77,4 +76,10 @@ public class QuestPage implements Command {
 			user.addQuestPlayed();
 		}
 	}
+
+
+
 }
+
+
+

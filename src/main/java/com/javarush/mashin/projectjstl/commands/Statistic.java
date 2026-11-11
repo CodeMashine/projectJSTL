@@ -1,6 +1,5 @@
 package com.javarush.mashin.projectjstl.commands;
 
-import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.entity.UserViewDTO;
 import com.javarush.mashin.projectjstl.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;

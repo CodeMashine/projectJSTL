@@ -1,6 +1,5 @@
 package com.javarush.mashin.projectjstl.service;
 
-import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
 import com.javarush.mashin.projectjstl.entity.ROLE;
 import com.javarush.mashin.projectjstl.entity.UserDTO;
 import com.javarush.mashin.projectjstl.entity.UserViewDTO;

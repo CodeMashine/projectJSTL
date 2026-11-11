@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class JsonQuestParser implements QuestParser {
+public class JsonFromMemoryQuestParser implements QuestParser {
 	private final Map<String, Map<String, QuestionDTO>> questCache = new ConcurrentHashMap<>();
 
 	public Map<String, QuestionDTO> getQuest(String questName) {

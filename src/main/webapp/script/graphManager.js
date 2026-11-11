@@ -1,5 +1,6 @@
 App.graphManager = class {
     constructor(container, editFormManager) {
+        this.addCustomCodec();
         this.graph = new mxGraph(container);
         this.editFormManager = editFormManager;
     }
@@ -24,7 +25,41 @@ App.graphManager = class {
 
         this.addDeleteListener();
         this.addDoubleClickListener();
-        // this.clickListener();
+    }
+
+    addCustomCodec() {
+        const stepCodec = new mxObjectCodec(new App.cellData());
+        stepCodec.name = "cellData";
+        stepCodec.encode = function (enc, obj) {
+            const doc = mxUtils.createXmlDocument();
+            const node = doc.createElement(this.name);
+
+            node.setAttribute('stepName', obj.stepName ?? '');
+            node.setAttribute('questionText', obj.questionText ?? '');
+            node.setAttribute('isWin', obj.isWin ? '1' : '0');
+            node.setAttribute('isLose', obj.isLose ? '1' : '0');
+            node.setAttribute('isPassable', obj.isPassable ? '1' : '0');
+
+            return node;
+        };
+
+        stepCodec.decode = function (dec, node, into) {
+            const obj = into || new App.cellData();
+
+            obj.stepName = node.getAttribute('stepName');
+            obj.questionText = node.getAttribute('questionText');
+            obj.isWin = node.getAttribute('isWin') === '1';
+            obj.isLose = node.getAttribute('isLose') === '1';
+            obj.isPassable = node.getAttribute('isPassable') === '1';
+
+            return obj;
+        };
+
+        mxCodecRegistry.register(stepCodec);
+    }
+
+    clearSelection() {
+        this.graph.clearSelection();
     }
 
     addDeleteListener() {

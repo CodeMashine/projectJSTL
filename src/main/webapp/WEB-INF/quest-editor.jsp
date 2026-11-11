@@ -14,6 +14,9 @@
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/WEB-INF/header.jsp"/>
 <section class="flex-grow-1 py-4 py-xl-5 hero">
+    <div>
+        <input class="quest-name" type="text" placeholder="quest name">
+    </div>
     <div class="container-fluid">
         <div class="row vh-80 ">
             <div class="col-9 pe-2 h-100">
@@ -35,13 +38,12 @@
                                   placeholder="Input text..." required></textarea>
                     </div>
 
-                    <!-- Статус шага (Радиокнопки) -->
                     <div class="mb-3 flex-box">
-                        <label class="form-label fw-bold d-block">Step status:</label>
+                        <label class="form-label fw-bold d-block"  >Step status:</label>
 
                         <div class="form-check">
                             <input class="form-check-input isPassable" type="radio" name="blockStatus" id="statusPassable"
-                                   value="passable">
+                                   value="passable" required >
                             <label class="form-check-label" for="statusPassable">Passable</label>
                         </div>
 
@@ -50,7 +52,7 @@
                             <label class="form-check-label" for="statusWin">Win</label>
                         </div>
 
-                        <div class="form-check mb-2">
+                        <div class="form-check">
                             <input class="form-check-input isLose" type="radio" name="blockStatus" id="statusLose"
                                    value="lose">
                             <label class="form-check-label" for="statusLose">Lose</label>

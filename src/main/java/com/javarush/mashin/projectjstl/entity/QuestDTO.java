@@ -4,27 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuestDTO {
-	private Map<String, QuestionDTO> quest = new HashMap<>();
-	private String questName = "Quest";
+	private Map<String, QuestionDTO> questJson = new HashMap<>();
+	private String questName;
+	private int questId;
 
-	public void setQuestName(String questName){
-		this.questName = questName;
-	}
-
-	public String getQuestName(){
+	public String getQuestName() {
 		return questName;
 	}
 
-	public Map<String, QuestionDTO>  getQuest() {
-		return quest;
+	public int getQuestId() {
+		return questId;
 	}
 
-	public void setQuest(Map<String, QuestionDTO>  quest) {
-		this.quest = quest;
+	public Map<String, QuestionDTO> getQuestJson() {
+		return questJson;
 	}
 
 	public QuestionDTO getQuestion(String stepName) {
-		QuestionDTO question = quest.get(stepName);
-		return question ;
+		QuestionDTO question = questJson.get(stepName);
+		return question;
 	}
 }

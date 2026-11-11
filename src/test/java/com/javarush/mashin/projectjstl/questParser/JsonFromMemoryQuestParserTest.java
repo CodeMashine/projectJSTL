@@ -9,16 +9,16 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonQuestParserTest {
+class JsonFromMemoryQuestParserTest {
 	private static final String TEST_QUEST = "ElfQuest";
 	private static final String UNKNOWN_QUEST = "unknownQuest";
 	private static final String START_QUEST = "start";
 
-	private JsonQuestParser parser;
+	private JsonFromMemoryQuestParser parser;
 
 	@BeforeEach
 	void setUp() {
-		parser = new JsonQuestParser();
+		parser = new JsonFromMemoryQuestParser();
 	}
 
 	@Test

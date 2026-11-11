@@ -1,6 +1,4 @@
 App.toolbarManager = class {
-    graph;
-
     constructor(graph, container) {
         this.graph = graph;
         this.toolbar = new mxToolbar(container);
@@ -39,13 +37,75 @@ App.toolbarManager = class {
         });
 
         this.toolbar.addItem('Save', null, () => {
-            const encoder = new mxCodec();
-            const node = encoder.encode(this.graph.getModel());
-            const xmlString = mxUtils.getXml(node);
-            console.log(xmlString);
+            const questName = this.getQuestName();
+            const questXml = this.getXML();
+            const questJson = this.getJson();
+            this.sendToServer(questName, questXml,questJson);
         });
+    }
+
+    async sendToServer(questName, questXml,questJson) {
+        const params = new URLSearchParams ();
+        params.append('questName', questName);
+        params.append('questXml', questXml);
+        params.append('questJson', questJson);
+
+        try {
+            const response = await fetch(`/save-quest`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: params
+            });
+
+            if (response.ok) {
+                console.log('Quest saved');
+            } else {
+                console.error('Error quest save:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+        }
 
     }
-}
+    getXML() {
+        const codec = new mxCodec();
+        const node = codec.encode(this.graph.getModel());
+        const xmlString = mxUtils.getPrettyXml(node);
+        return xmlString;
+    }
 
+    getJson() {
+        let model = this.graph.getModel();
+        let preJson = {};
+
+        for (let key in Object.keys(model.cells)) {
+        // for (let key of Object.keys(model.cells)) {
+            let cell = model.cells[key];
+            let stepData = cell.value;
+            if (!stepData) continue;
+            preJson[cell.id] = {
+                stepName: stepData.stepName,
+                questionText: stepData.questionText,
+                isWin: stepData.isWin,
+                isLose: stepData.isLose,
+                isPassable: stepData.isPassable,
+                choices: []
+            }
+
+            for (let i = 0; i < cell.edges.length; i++) {
+                let targetId = cell.edges[i].target.id;
+                if(targetId !== cell.id){
+                    preJson[cell.id].choices.push(targetId);
+                }
+            }
+        }
+        return JSON.stringify(preJson,null,2);;
+    }
+
+    getQuestName() {
+        return document.querySelector(".quest-name").value;
+    }
+}
 

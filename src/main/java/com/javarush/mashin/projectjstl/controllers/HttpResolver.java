@@ -1,6 +1,6 @@
 package com.javarush.mashin.projectjstl.controllers;
 
-import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
+import com.javarush.mashin.projectjstl.config.BeanFactory;
 import com.javarush.mashin.projectjstl.commands.Command;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import com.javarush.mashin.projectjstl.util.Urls;

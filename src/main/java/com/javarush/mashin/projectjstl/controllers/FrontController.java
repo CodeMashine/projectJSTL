@@ -1,7 +1,8 @@
 package com.javarush.mashin.projectjstl.controllers;
 
-import com.javarush.mashin.projectjstl.beanFactory.BeanFactory;
+import com.javarush.mashin.projectjstl.config.BeanFactory;
 import com.javarush.mashin.projectjstl.commands.Command;
+import com.javarush.mashin.projectjstl.config.Config;
 import com.javarush.mashin.projectjstl.service.UserService;
 import com.javarush.mashin.projectjstl.util.Urls;
 import jakarta.servlet.ServletException;
@@ -12,7 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet({Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN, Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.EDIT_USERS, Urls.DELETE_PROFILE, Urls.QUEST_EDITOR})
+@WebServlet({
+		Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN,
+		Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.EDIT_USERS, Urls.DELETE_PROFILE,
+		Urls.QUEST_EDITOR, Urls.QUESTS,Urls.SAVE_QUEST})
 public class FrontController extends HttpServlet {
 	private final HttpResolver httpResolver = BeanFactory.getBean(HttpResolver.class);
 
@@ -20,6 +24,8 @@ public class FrontController extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		BeanFactory.getBean(UserService.class);
+		BeanFactory.getBean(Config.class);
+
 	}
 
 	@Override

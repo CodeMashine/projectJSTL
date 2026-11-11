@@ -11,19 +11,23 @@ App.editFormManager = class {
     }
 
     init() {
-        this.removeDefaultSubmit();
+        this.customSubmit();
     }
 
-    removeDefaultSubmit() {
+    customSubmit() {
         this.form.addEventListener("submit", (e) => {
             e.preventDefault();
             this.dataHandler();
+            console.log(this.cell.value);
+            App.observer.emit("dataSaved", this.cell);
+            App.observer.emit("clearSelection");
+            this.clearForm();
         })
     }
 
     setEditCell(cell) {
         this.cell = cell;
-        const data = cell.value
+        const data = cell.value;
         this.stepName.value = data.stepName;
         this.questionText.value = data.questionText;
         this.isWin.checked = data.isWin;
@@ -36,8 +40,16 @@ App.editFormManager = class {
         data.stepName = this.stepName.value;
         data.questionText = this.questionText.value;
         data.isWin = this.isWin.checked;
-        this.isLose.checked = data.isLose = this.isLose.checked;
-        this.isPassable.checked = data.isPassable = this.isPassable.checked;
-        App.observer.emit("dataSaved" , this.cell);
+        data.isLose = this.isLose.checked;
+        data.isPassable = this.isPassable.checked;
+    }
+
+    clearForm() {
+        this.stepName.value = "";
+        this.questionText.value = "";
+        this.isWin.checked = false;
+        this.isLose.checked = false;
+        this.isPassable.checked = true;
+        this.cell = null;
     }
 }

@@ -1,4 +1,4 @@
-package com.javarush.mashin.projectjstl.beanFactory;
+package com.javarush.mashin.projectjstl.config;
 
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 
