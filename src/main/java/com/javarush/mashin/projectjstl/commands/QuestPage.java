@@ -1,85 +1,41 @@
 package com.javarush.mashin.projectjstl.commands;
 
-import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import com.javarush.mashin.projectjstl.entity.QuestDTO;
 import com.javarush.mashin.projectjstl.entity.QuestionDTO;
 import com.javarush.mashin.projectjstl.entity.UserDTO;
-import com.javarush.mashin.projectjstl.questParser.JsonFromMemoryQuestParser;
-import com.javarush.mashin.projectjstl.questParser.QuestParser;
-
-import java.util.Map;
+import com.javarush.mashin.projectjstl.service.GameService;
+import com.javarush.mashin.projectjstl.service.QuestService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public class QuestPage implements Command {
+	QuestService questService;
+	GameService gameService;
 
-	private QuestParser questParser;
-
-	public QuestPage(JsonFromMemoryQuestParser questParser) {
-		this.questParser = questParser;
+	public QuestPage(QuestService questService, GameService gameService) {
+		this.questService = questService;
+		this.gameService = gameService;
 	}
 
 	@Override
 	public String doGet(HttpServletRequest req) {
 		HttpSession session = req.getSession();
+		UserDTO user = (UserDTO) session.getAttribute("user");
+//		Integer questId = (Integer) session.getAttribute("questId");
 
-		String questName = getOrDefaultQuestName(req);
-		String nextStep = getOrDefaultQuestStep(req);
-		String prevStep = (String) session.getAttribute("currentStep");
-		UserDTO player = getUser(req, session);
+		int questId = Integer.parseInt(req.getParameter("questId"));
+		String nextStep = req.getParameter("nextStep");
+		String previousStep = (String) session.getAttribute("previousStep");
 
-		Map<String, QuestionDTO> quest = questParser.getQuest(questName);
-		QuestionDTO questionDTO = quest.get(nextStep);
+		QuestDTO quest = questService.getQuest(questId);
+		QuestionDTO currentQuestion = quest.getQuestion(nextStep);
 
-		if (!nextStep.equals(prevStep)) {
-			countOutcome(questionDTO, player);
-		}
+		gameService.step(quest, currentQuestion, user);
 
-		session.setAttribute("quest", questName);
-		session.setAttribute("currentStep", nextStep);
-		req.setAttribute("question", questionDTO);
+		req.setAttribute("questId", questId);
+		req.setAttribute("questName", quest.getQuestName());
+		req.setAttribute("currentQuestion", currentQuestion);
+
 		return getView();
 	}
-
-	private String getOrDefaultQuestStep(HttpServletRequest req) {
-		String currentStep = req.getParameter("currentStep");
-		if (currentStep == null) {
-			currentStep = "start";
-		}
-		return currentStep;
-	}
-
-	// need maybe
-	private String getOrDefaultQuestName(HttpServletRequest req) {
-		String questName = req.getParameter("quest");
-		if (questName == null) {
-			questName = "elfQuest";
-
-		}
-		return questName;
-	}
-
-	// maybe need send exception on front
-	private UserDTO getUser(HttpServletRequest req, HttpSession session) {
-		UserDTO user = (UserDTO) session.getAttribute("user");
-		if (user == null) {
-			throw new ProjectJSTLException("User not found");
-		}
-		return user;
-	}
-
-	private void countOutcome(QuestionDTO questionDTO, UserDTO user) {
-		if (questionDTO.isTerminal() && questionDTO.isWin()) {
-			user.addQuestWin();
-			user.addQuestPlayed();
-		} else if (questionDTO.isTerminal() && !questionDTO.isWin()) {
-			user.addQuestLose();
-			user.addQuestPlayed();
-		}
-	}
-
-
-
 }
-
-
-

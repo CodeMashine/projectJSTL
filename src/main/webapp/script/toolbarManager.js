@@ -80,27 +80,36 @@ App.toolbarManager = class {
         let model = this.graph.getModel();
         let preJson = {};
 
-        for (let key in Object.keys(model.cells)) {
-        // for (let key of Object.keys(model.cells)) {
+        for (let key in model.cells) {
             let cell = model.cells[key];
             let stepData = cell.value;
             if (!stepData) continue;
             preJson[cell.id] = {
+                id:cell.id,
                 stepName: stepData.stepName,
                 questionText: stepData.questionText,
                 isWin: stepData.isWin,
                 isLose: stepData.isLose,
-                isPassable: stepData.isPassable,
                 choices: []
             }
-
             for (let i = 0; i < cell.edges.length; i++) {
                 let targetId = cell.edges[i].target.id;
                 if(targetId !== cell.id){
-                    preJson[cell.id].choices.push(targetId);
+                    let choice = {};
+                    choice["id"] = targetId;
+                    preJson[cell.id].choices.push(choice);
                 }
             }
         }
+
+        for(let key in preJson){
+            for(let choice of preJson[key].choices){
+                choice["name"] = preJson[choice.id].stepName ;
+            }
+
+        }
+
+
         return JSON.stringify(preJson,null,2);;
     }
 

@@ -1,9 +1,11 @@
 package com.javarush.mashin.projectjstl.entity;
 
 public class QuestionDTO {
-	private String question;
+	private String id ;
+	private String stepName;
+	private String questionText;
 	private ChoiceDTO[] choices;
-	private boolean isTerminal;
+	private boolean isLose;
 	private boolean isWin;
 
 	public ChoiceDTO[] getChoices() {
@@ -14,20 +16,20 @@ public class QuestionDTO {
 		this.choices = choices;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getQuestionText() {
+		return questionText;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setQuestionText(String questionText) {
+		this.questionText = questionText;
 	}
 
-	public boolean isTerminal() {
-		return isTerminal;
+	public boolean isLose() {
+		return isLose;
 	}
 
-	public void setIsTerminal(boolean isTerminal) {
-		this.isTerminal = isTerminal;
+	public void setIsLose(boolean isTerminal) {
+		this.isLose = isTerminal;
 	}
 
 	public boolean isWin() {
@@ -36,5 +38,21 @@ public class QuestionDTO {
 
 	public void setIsWin(boolean isWin) {
 		this.isWin = isWin;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public String getStepName() {
+		return stepName;
+	}
+
+	public void setStepName(String stepName) {
+		this.stepName = stepName;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

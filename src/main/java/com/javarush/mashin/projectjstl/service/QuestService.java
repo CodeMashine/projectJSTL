@@ -1,6 +1,9 @@
 package com.javarush.mashin.projectjstl.service;
 import com.javarush.mashin.projectjstl.entity.QuestDTO;
+import com.javarush.mashin.projectjstl.entity.QuestEntity;
+import com.javarush.mashin.projectjstl.entity.QuestionDTO;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
+import com.javarush.mashin.projectjstl.questParser.QuestJsonParser;
 import com.javarush.mashin.projectjstl.repository.QuestRepository;
 
 import java.sql.ResultSet;
@@ -10,12 +13,19 @@ import java.util.Map;
 
 public class QuestService {
 	QuestRepository questRepository;
-	public QuestService(QuestRepository questRepository) {
+	QuestJsonParser questJsonParser;
+	public QuestService(QuestRepository questRepository, QuestJsonParser questJsonParser) {
 		this.questRepository = questRepository;
+		this.questJsonParser = questJsonParser;
 	}
 
 	public QuestDTO getQuest(int id){
-		ResultSet quest = questRepository.getById(id);
+		QuestEntity rawQuest = questRepository.getById(id);
+		String questName = rawQuest.getName();
+		int questId = rawQuest.getId();
+		String questJson = rawQuest.getRawQuestJson();
+		Map <String, QuestionDTO> questMap = questJsonParser.parse(questJson);
+		return new QuestDTO(questId,questName,questMap);
 	}
 
 	public Map<Integer , String> getAllQuests()  {

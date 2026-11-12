@@ -19,13 +19,13 @@
         <div class="row h-100">
             <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center mx-auto">
                 <div class="text-center w-100 ms-0 ps-0 me-0 pe-0">
-                    <h2 class="fw-bold mb-3 d-flex flex-column justify-content-end question">${requestScope.question.getQuestion()}</h2>
+                    <h2 class="fw-bold mb-3 d-flex flex-column justify-content-end question">${requestScope.currentQuestion.getQuestionText()}</h2>
                     <div class="d-grid gap-2 mt-4">
                         <div class="d-flex flex-column justify-content-center h-100">
-                            <c:forEach var="item" items="${requestScope.question.getChoices()}">
+                            <c:forEach var="item" items="${requestScope.currentQuestion.getChoices()}">
                                 <div class="mt-4">
                                     <a class="btn btn-primary fs-5 me-2 px-4 py-2 btn" role="button"
-                                       href="quest-page?quest=${sessionScope.quest}&currentStep=${item.getNextStep()}">${item.getAnswer()}</a>
+                                       href="quest-page?questId=${requestScope.questId}&nextStep=${item.getId()}">${item.getName()}</a>
                                 </div>
                             </c:forEach>
                         </div>
@@ -34,11 +34,11 @@
             </div>
 
             <div class="container  text-center">
-                <c:if test="${requestScope.question.isWin()}">
+                <c:if test="${requestScope.currentQuestion.isWin()}">
                     <h3 class="fw-bold mb-4">YOU WIN!!!</h3>
                 </c:if>
 
-                <c:if test="${requestScope.question.isTerminal()}">
+                <c:if test="${requestScope.currentQuestion.isLose() || requestScope.currentQuestion.isWin()}">
                     <a href="${pageContext.request.contextPath}/home"
                        class="btn btn-primary fs-5 me-2 px-4 py-2 btn" role="button">Home</a>
                 </c:if>

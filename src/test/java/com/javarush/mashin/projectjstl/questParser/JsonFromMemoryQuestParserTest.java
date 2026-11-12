@@ -39,7 +39,7 @@ class JsonFromMemoryQuestParserTest {
 		Map<String, QuestionDTO> quest = parser.getQuest(TEST_QUEST);
 		boolean hasWinStep = false;
 		for (QuestionDTO questionDTO : quest.values()) {
-			if (questionDTO.isTerminal()) {
+			if (questionDTO.isLose()) {
 				if (questionDTO.isWin()) {
 					hasWinStep = true;
 				}
@@ -53,7 +53,7 @@ class JsonFromMemoryQuestParserTest {
 		Map<String, QuestionDTO> quest = parser.getQuest(TEST_QUEST);
 		boolean hasLoseStep = false;
 		for (QuestionDTO questionDTO : quest.values()) {
-			if (questionDTO.isTerminal()) {
+			if (questionDTO.isLose()) {
 				if (!questionDTO.isWin()) {
 					hasLoseStep = true;
 				}
@@ -78,7 +78,7 @@ class JsonFromMemoryQuestParserTest {
 	void noTerminalStepsHaveChoice() {
 		Map<String, QuestionDTO> quest = parser.getQuest(TEST_QUEST);
 		for (QuestionDTO questionDTO : quest.values()) {
-			if (!questionDTO.isTerminal()) {
+			if (!questionDTO.isLose()) {
 				assertTrue(questionDTO.getChoices().length > 0);
 			}
 		}
@@ -88,7 +88,7 @@ class JsonFromMemoryQuestParserTest {
 	void terminalStepsHaveNotChoice() {
 		Map<String, QuestionDTO> quest = parser.getQuest(TEST_QUEST);
 		for (QuestionDTO questionDTO : quest.values()) {
-			if (questionDTO.isTerminal()) {
+			if (questionDTO.isLose()) {
 				assertEquals(0, questionDTO.getChoices().length);
 			}
 		}

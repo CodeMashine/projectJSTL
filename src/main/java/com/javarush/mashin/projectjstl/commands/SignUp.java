@@ -26,7 +26,7 @@ public class SignUp implements Command {
 		UserDTO user = userService.createUser(username, password, role);
 
 		session.setAttribute("user", user);
-		session.setAttribute("haveLoginUser", true);
+//		session.setAttribute("haveLoginUser", true);
 		return Urls.HOME;
 	}
 }

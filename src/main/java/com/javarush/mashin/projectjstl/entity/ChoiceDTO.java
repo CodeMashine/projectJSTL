@@ -1,22 +1,24 @@
 package com.javarush.mashin.projectjstl.entity;
 
 public class ChoiceDTO {
-	private String answer;
-	private String nextStep;
+	private String name;
+	private String id;
 
-	public String getAnswer() {
-		return answer;
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getNextStep() {
-		return nextStep;
+	public String getName() {
+		return name;
 	}
 
-	public void setNextStep(String nextStep) {
-		this.nextStep = nextStep;
+	public String getId() {
+		return id;
 	}
+
 }

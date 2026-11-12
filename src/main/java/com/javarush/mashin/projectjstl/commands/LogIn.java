@@ -20,7 +20,7 @@ public class LogIn implements Command {
 		HttpSession session = req.getSession();
 
 		boolean isLogIn = userService.authenticate(name, password);
-		req.setAttribute("isLogIn", isLogIn);
+//		req.setAttribute("isLogin", isLogIn);
 
 		if (isLogIn) {
 			UserDTO userDTO = userService.getUserByName(name);

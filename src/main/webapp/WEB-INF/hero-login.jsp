@@ -14,7 +14,7 @@
                         <div class="text-center px-lg-4 py-4 py-lg-0">
                             <h4>${quest.getValue()}</h4>
                         </div>
-                        <a href="${pageContext.request.contextPath}/quest-page?quest-id=${quest.getKey()}"
+                        <a href="${pageContext.request.contextPath}/quest-page?questId=${quest.getKey()}"
                            class="btn btn-primary btn-sm">Play</a>
                     </div>
                 </div>

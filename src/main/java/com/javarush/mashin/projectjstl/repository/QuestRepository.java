@@ -1,5 +1,6 @@
 package com.javarush.mashin.projectjstl.repository;
 
+import com.javarush.mashin.projectjstl.entity.QuestEntity;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +48,21 @@ public class QuestRepository implements Repository {
 	}
 
 	@Override
-	public Object getById(int id) {
-		return null;
+	public QuestEntity getById(int id) {
+		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(
+				"select * from quests  where id = ?")) {
+			pstmt.setInt(1, id);
+			ResultSet rawQuest = pstmt.executeQuery();
+			rawQuest.next();
+			int questId = rawQuest.getInt("id");
+			String questName = rawQuest.getString("quest_name");
+			String questXml = rawQuest.getString("quest_xml");
+			String questJson = rawQuest.getString("quest_json");
+			QuestEntity result = new QuestEntity(questId, questName, questXml, questJson);
+			return result;
+		} catch (SQLException e) {
+			throw new ProjectJSTLException(e);
+		}
 	}
 
 	@Override
@@ -81,8 +96,7 @@ public class QuestRepository implements Repository {
 	}
 
 	private void checkOrCreateQuestTable() {
-		String createQuestTable = "CREATE TABLE IF NOT EXISTS quests("
-				+ "id SERIAL PRIMARY KEY" + ",quest_name VARCHAR(30) NOT NULL" + ",quest_xml TEXT NOT NULL, quest_json TEXT NOT NULL)";
+		String createQuestTable = "CREATE TABLE IF NOT EXISTS quests(" + "id SERIAL PRIMARY KEY" + ",quest_name VARCHAR(30) NOT NULL" + ",quest_xml TEXT NOT NULL, quest_json TEXT NOT NULL)";
 
 		try (Connection conn = getConnection(); Statement stmt = conn.createStatement();) {
 			stmt.execute(createQuestTable);
