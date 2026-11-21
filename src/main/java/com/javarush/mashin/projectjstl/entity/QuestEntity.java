@@ -1,6 +1,6 @@
 package com.javarush.mashin.projectjstl.entity;
 
-public class QuestEntity {
+public class QuestEntity implements Entity{
 	int id;
 	String name;
 	String rawQuestXml;

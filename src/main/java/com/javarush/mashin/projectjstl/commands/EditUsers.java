@@ -1,6 +1,6 @@
 package com.javarush.mashin.projectjstl.commands;
 
-import com.javarush.mashin.projectjstl.entity.UserViewDTO;
+import com.javarush.mashin.projectjstl.entity.UserDTO;
 import com.javarush.mashin.projectjstl.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -14,7 +14,7 @@ public class EditUsers implements Command {
 
 	@Override
 	public String doGet(HttpServletRequest req) {
-		List<UserViewDTO> users = userService.getUsersStatistic() ;
+		List<UserDTO> users = userService.getAllUsers() ;
 
 		req.setAttribute("editUsersList", users);
 		return getView();

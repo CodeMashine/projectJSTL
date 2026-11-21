@@ -19,7 +19,7 @@ public class DeleteProfile implements Command {
 		UserDTO userDTO = (UserDTO) session.getAttribute("user");
 
 		int idToDel = Integer.valueOf(req.getParameter("id"));
-		userService.deleteUserById(idToDel);
+		userService.deleteUser(idToDel);
 
 		if (userDTO.getId() == idToDel) {
 			session.invalidate();

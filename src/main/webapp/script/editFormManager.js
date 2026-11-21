@@ -18,7 +18,6 @@ App.editFormManager = class {
         this.form.addEventListener("submit", (e) => {
             e.preventDefault();
             this.dataHandler();
-            console.log(this.cell.value);
             App.observer.emit("dataSaved", this.cell);
             App.observer.emit("clearSelection");
             this.clearForm();
@@ -26,6 +25,7 @@ App.editFormManager = class {
     }
 
     setEditCell(cell) {
+        console.log(cell);
         this.cell = cell;
         const data = cell.value;
         this.stepName.value = data.stepName;

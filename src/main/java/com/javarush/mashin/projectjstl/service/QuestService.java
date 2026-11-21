@@ -2,13 +2,11 @@ package com.javarush.mashin.projectjstl.service;
 import com.javarush.mashin.projectjstl.entity.QuestDTO;
 import com.javarush.mashin.projectjstl.entity.QuestEntity;
 import com.javarush.mashin.projectjstl.entity.QuestionDTO;
-import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 import com.javarush.mashin.projectjstl.questParser.QuestJsonParser;
 import com.javarush.mashin.projectjstl.repository.QuestRepository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestService {
@@ -28,20 +26,27 @@ public class QuestService {
 		return new QuestDTO(questId,questName,questMap);
 	}
 
+	public QuestEntity getQuestEntity(int id){
+		return questRepository.getById(id);
+	}
+
 	public Map<Integer , String> getAllQuests()  {
-		ResultSet resultSet = questRepository.getQuests();
-		Map<Integer , String> quests = new HashMap<>();
-		try {
-			while (resultSet.next()) {
-				quests.put(resultSet.getInt(1), resultSet.getString(2));
-			}
-		}catch (SQLException e) {
-			throw new ProjectJSTLException(e);
+		List<QuestEntity> rawQuestList = questRepository.getAll();
+		Map<Integer , String> questMap = new HashMap<>();
+		for (QuestEntity rawQuest : rawQuestList) {
+			questMap.put(rawQuest.getId(), rawQuest.getName());
 		}
-		return quests;
+		return questMap;
 	}
 
 	public void saveQuest(String questName,String questXml, String Json){
 		questRepository.saveQuest(questName,questXml,Json);
+	}
+	public void updateQuest(int questId ,String questName,String questXml, String Json){
+		questRepository.updateQuest(questId,questName,questXml,Json);
+	}
+
+	public void deleteQuest(Integer id) {
+		questRepository.deleteQuest(id);
 	}
 }

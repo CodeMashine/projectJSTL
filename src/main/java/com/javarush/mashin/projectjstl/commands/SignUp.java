@@ -13,7 +13,6 @@ public class SignUp implements Command {
 
 	public SignUp(UserService userService) {
 		this.userService = userService;
-//		userService = BeanFactory.getBean(UserService.class);
 	}
 
 	@Override
@@ -23,10 +22,9 @@ public class SignUp implements Command {
 		String password = req.getParameter("password");
 		String rawRole = req.getParameter("role");
 		ROLE role = ROLE.valueOf(rawRole.toUpperCase());
-		UserDTO user = userService.createUser(username, password, role);
-
-		session.setAttribute("user", user);
-//		session.setAttribute("haveLoginUser", true);
-		return Urls.HOME;
+		int id = userService.addUser(username, password, role);
+		UserDTO userDTO = userService.getUserDTO(id);
+		session.setAttribute("user", userDTO);
+		return "redirect:" + Urls.HOME;
 	}
 }

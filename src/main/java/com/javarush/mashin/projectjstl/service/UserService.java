@@ -2,66 +2,97 @@ package com.javarush.mashin.projectjstl.service;
 
 import com.javarush.mashin.projectjstl.entity.ROLE;
 import com.javarush.mashin.projectjstl.entity.UserDTO;
-import com.javarush.mashin.projectjstl.entity.UserViewDTO;
+import com.javarush.mashin.projectjstl.entity.UserEntity;
+import com.javarush.mashin.projectjstl.entity.UserStatDTO;
+import com.javarush.mashin.projectjstl.entity.UserStatEntity;
+import com.javarush.mashin.projectjstl.repository.GameInProgressRepository;
+import com.javarush.mashin.projectjstl.repository.PlayedGamesRepository;
 import com.javarush.mashin.projectjstl.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
 public class UserService {
-	private UserRepository userRepo;
-	private AtomicInteger userCounter = new AtomicInteger(0);
+	private UserRepository userRepository;
+	private PlayedGamesRepository playedGamesRepository;
+	private GameInProgressRepository gameInProgressRepository;
 
-	public UserService(UserRepository userRepo) {
-		this.userRepo = userRepo;
-		startFillUserRepository();
+	public UserService(UserRepository userRepository, PlayedGamesRepository playedGamesRepository,
+					   GameInProgressRepository gameInProgressRepository) {
+		this.userRepository = userRepository;
+		this.playedGamesRepository = playedGamesRepository;
+		this.gameInProgressRepository = gameInProgressRepository;
 	}
 
-	public synchronized UserDTO createUser(String name, String password, ROLE role) {
-		Integer userId = userCounter.incrementAndGet();
-		UserDTO newUser = new UserDTO(userId, name, password, role);
-		userRepo.add(newUser);
-		return newUser;
+	public int addUser(String username, String password, ROLE role) {
+		int userId = userRepository.createUser(username, password, role.name());
+		playedGamesRepository.addUser(userId);
+		return userId;
 	}
 
-	public UserDTO getUser(int userId) {
-		return userRepo.getById(userId);
+	public void addLoseGame(UserDTO user, int questId) {
+		int userId = user.getId();
+		user.removeGameInProgress(questId) ;
+		gameInProgressRepository.removeGameInProgress(userId, questId);
+		playedGamesRepository.addLose(userId);
 	}
 
-	public UserDTO getUserByName(String name) {
-		return userRepo.getByName(name);
+	public void addWinGame(UserDTO user, int questId) {
+		int userId = user.getId();
+		user.removeGameInProgress(questId) ;
+		gameInProgressRepository.removeGameInProgress(userId, questId);
+		playedGamesRepository.addWin(userId);
 	}
 
-	public boolean authenticate(String name, String password) {
-		UserDTO user = userRepo.getByName(name);
-		if (user == null) {
-			return false;
+	public void setGameInProgress(int userId, int questId, String stepId) {
+		gameInProgressRepository.setGameInProgress(userId, questId, stepId);
+	}
+
+	public Integer authenticate(String username, String password) {
+		UserEntity user = userRepository.getByName(username);
+		if (user != null && user.getPassword().equals(password) ) {
+			return user.getId();
 		}
-		return user.checkPassword(password);
+		return null;
 	}
 
-	public synchronized List<UserViewDTO> getUsersStatistic() {
-		ArrayList<UserViewDTO> usersStatistic = new ArrayList<>();
-		for (UserDTO user : userRepo.getAll()) {
-			usersStatistic.add(UserViewDTO.from(user));
+
+	public List<UserStatEntity> getUsersStatistic(){
+		return userRepository.getAllUserStat();
+	}
+
+	public UserDTO getUserDTO(int userId) {
+		UserEntity user = userRepository.getById(userId);
+		UserDTO userDTO = getDTOFromEntity(user);
+		Map <Integer,String> map = gameInProgressRepository.getAllGameInProgressForUser(userId);
+		userDTO.setGameInProgress(map);
+		return userDTO;
+	}
+
+	public void deleteUser(int userId) {
+		userRepository.deleteUser(userId);
+	}
+
+	public boolean updateUser(int id , String username) {
+		int res = userRepository.updateUser(id, username);
+		return res == 1;
+	}
+
+	public List<UserDTO>  getAllUsers(){
+		List <UserEntity> userEntityList = userRepository.getAll();
+		List<UserDTO> userDTOList = new ArrayList<>();
+		for (UserEntity userEntity : userEntityList) {
+			userDTOList.add(getDTOFromEntity(userEntity));
 		}
-		return usersStatistic;
+		return userDTOList;
 	}
 
-	private void startFillUserRepository() {
-		for (int i = 0; i < 3; i++) {
-			createUser("User " + i, "123", i % 2 == 0 ? ROLE.USER : ROLE.ADMIN);
-		}
-	}
-
-	public UserDTO updateUser(int id, String username) {
-		UserDTO user = userRepo.getById(id);
-		user.setName(username);
-		return user;
-	}
-
-	public void deleteUserById(int idToDel) {
-		userRepo.deleteById(idToDel);
+	private UserDTO getDTOFromEntity(UserEntity userEntity) {
+		int id = userEntity.getId();
+		String name = userEntity.getName();
+		ROLE role = ROLE.valueOf(userEntity.getRole());
+		return new UserDTO(id, name, role);
 	}
 }

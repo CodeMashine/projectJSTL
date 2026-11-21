@@ -4,121 +4,104 @@ import com.javarush.mashin.projectjstl.entity.QuestEntity;
 import com.javarush.mashin.projectjstl.exception.ProjectJSTLException;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class QuestRepository implements Repository {
-
-	private String url = "jdbc:postgresql://localhost:9999/postgres";
-	private String user = "postgres";
-	private String password = "postgres";
+public class QuestRepository extends Repository {
 
 	public QuestRepository() {
-		init();
 		checkOrCreateQuestTable();
 	}
 
-	private void init() {
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+	public List<QuestEntity> getAll() {
 		try (Connection conn = getConnection()) {
-
-		} catch (Exception e) {
-			System.out.println(e);
+			PreparedStatement ps = conn.prepareStatement("select * from quests");
+			ResultSet resultSet = ps.executeQuery();
+			List<QuestEntity> quests = new ArrayList<>();
+			try {
+				while (resultSet.next()) {
+					quests.add(parseToEntity(resultSet));
+				}
+			} catch (SQLException e) {
+				throw new ProjectJSTLException(e);
+			}
+			return quests;
+		} catch (SQLException e) {
+			throw new ProjectJSTLException(e);
 		}
 	}
 
-	@Override
-	public void add(Object o) {
-
-	}
-
-	@Override
-	public List getAll() {
-		return List.of();
-	}
-
-	@Override
 	public QuestEntity getById(int id) {
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(
 				"select * from quests  where id = ?")) {
 			pstmt.setInt(1, id);
 			ResultSet rawQuest = pstmt.executeQuery();
-			rawQuest.next();
-			int questId = rawQuest.getInt("id");
-			String questName = rawQuest.getString("quest_name");
-			String questXml = rawQuest.getString("quest_xml");
-			String questJson = rawQuest.getString("quest_json");
-			QuestEntity result = new QuestEntity(questId, questName, questXml, questJson);
-			return result;
+			if (rawQuest.next()) {
+				return parseToEntity(rawQuest);
+			} else {
+				throw new ProjectJSTLException("No quest found with id " + id);
+			}
 		} catch (SQLException e) {
 			throw new ProjectJSTLException(e);
 		}
 	}
-
-	@Override
-	public Object remove(int id) {
-		return null;
-	}
-
-	public ResultSet getQuests() {
-		try (Connection conn = getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("select id,quest_name from quests");
-			return ps.executeQuery();
-		} catch (SQLException e) {
-			throw new ProjectJSTLException(e);
-		}
-	}
-
 
 	public void saveQuest(String questName, String questXML, String questJson) {
-
 		try (Connection conn = getConnection()) {
 			String saveQuestSQL = "INSERT INTO  quests(quest_name, quest_xml , quest_json) VALUES (?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(saveQuestSQL);
 			stmt.setString(1, questName);
 			stmt.setString(2, questXML);
 			stmt.setString(3, questJson);
+			stmt.execute();
+		} catch (SQLException e) {
+			throw new ProjectJSTLException(e);
+		}
+	}
+
+	public void updateQuest(int questId , String questName, String questXML, String questJson) {
+		try (Connection conn = getConnection()) {
+			String saveQuestSQL = "UPDATE quests SET quest_name = ?, quest_xml = ?, quest_json = ? WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(saveQuestSQL);
+			stmt.setString(1, questName);
+			stmt.setString(2, questXML);
+			stmt.setString(3, questJson);
+			stmt.setInt(4, questId);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new ProjectJSTLException(e);
 		}
-
 	}
 
 	private void checkOrCreateQuestTable() {
-		String createQuestTable = "CREATE TABLE IF NOT EXISTS quests(" + "id SERIAL PRIMARY KEY" + ",quest_name VARCHAR(30) NOT NULL" + ",quest_xml TEXT NOT NULL, quest_json TEXT NOT NULL)";
+		String createQuestTable = "CREATE TABLE IF NOT EXISTS quests(" + "id SERIAL PRIMARY KEY" + ",quest_name "
+				+ "VARCHAR(30) NOT NULL" + ",quest_xml TEXT NOT NULL, quest_json TEXT NOT NULL)";
 
-		try (Connection conn = getConnection(); Statement stmt = conn.createStatement();) {
-			stmt.execute(createQuestTable);
-			System.out.println("Table ready");
+		executeMyQuery(createQuestTable);
+	}
+
+	private QuestEntity parseToEntity(ResultSet rawQuest) {
+		try {
+			int questId = rawQuest.getInt("id");
+			String questName = rawQuest.getString("quest_name");
+			String questXml = rawQuest.getString("quest_xml");
+			String questJson = rawQuest.getString("quest_json");
+			return new QuestEntity(questId, questName, questXml, questJson);
 		} catch (SQLException e) {
 			throw new ProjectJSTLException(e);
 		}
 	}
 
-
-	private Connection getConnection() {
-		String url = "jdbc:postgresql://localhost:9999/postgres";
-		String user = "postgres";
-		String password = "postgres";
-
-		try {
-			Connection conn = DriverManager.getConnection(url, user, password);
-			if (conn != null) {
-				System.out.println("Connection successful");
-				return conn;
-			}
-			throw new ProjectJSTLException("Connection failed");
+	public void deleteQuest(Integer id) {
+		try (Connection conn = getConnection()) {
+			String saveQuestSQL = "DELETE from quests WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(saveQuestSQL);
+			stmt.setInt(1, id);
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new ProjectJSTLException(e);
 		}

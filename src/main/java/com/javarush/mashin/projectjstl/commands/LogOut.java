@@ -9,6 +9,6 @@ public class LogOut implements Command {
 	public String doGet(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		session.invalidate();
-		return Urls.HOME;
+		return "redirect:" + Urls.HOME;
 	}
 }

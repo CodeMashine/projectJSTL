@@ -31,7 +31,6 @@
                         <td>${user.getName()}</td>
                         <td><a href="${pageContext.request.contextPath}/edit-profile?id=${user.getId()}"
                                class="btn btn-primary btn-sm">Edit</a></td>
-<%--                        <td><a href="${pageContext.request.contextPath}/delete-profile?id=${user.getId()}"--%>
                         <td><a class="btn btn-primary btn-sm delete-user" data-userId="${user.getId()}" >Delete</a></td>
                     </tr>
                 </c:forEach>
@@ -42,6 +41,6 @@
 </section>
 
 <jsp:include page="/WEB-INF/footer.jsp"/>
-<script src="${pageContext.request.contextPath}/script/deleteUserResponce.js"></script>
+<script src="${pageContext.request.contextPath}/script/deleteUserResponse.js"></script>
 </body>
 </html>

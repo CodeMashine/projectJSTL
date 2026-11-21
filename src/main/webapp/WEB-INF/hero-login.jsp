@@ -16,49 +16,13 @@
                         </div>
                         <a href="${pageContext.request.contextPath}/quest-page?questId=${quest.getKey()}"
                            class="btn btn-primary btn-sm">Play</a>
+                        <c:if test="${sessionScope.user.getGamesInProgress().containsKey(quest.getKey())}">
+                            <a href="${pageContext.request.contextPath}/quest-page?questId=${quest.getKey()}&nextStep=${sessionScope.user.getGamesInProgress().get(quest.getKey())} "
+                            class="btn btn-primary btn-sm">Load</a>
+                        </c:if>
                     </div>
                 </div>
             </c:forEach>
-
-            <%--            <div class="col">--%>
-            <%--                <div class="d-flex flex-column">--%>
-            <%--                    <div class="text-center px-lg-4 py-4 py-lg-0">--%>
-            <%--                        <h4>Elf Quest</h4>--%>
-            <%--                        <p>Elf quest description</p>--%>
-            <%--                    </div>--%>
-            <%--                    <a href="${pageContext.request.contextPath}/quest-page?quest=elfQuest&currentStep=start"--%>
-            <%--                       class="btn btn-primary btn-sm">Play</a>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
-
-            <%--            <div class="col">--%>
-            <%--                <div class="d-flex flex-column">--%>
-            <%--                    <div class="text-center px-lg-4 py-4 py-lg-0">--%>
-            <%--                        <h4>Ufo quest</h4>--%>
-            <%--                        <p>Quest about Ufo</p>--%>
-            <%--                    </div>--%>
-            <%--                    <a href="${pageContext.request.contextPath}/quest-page?quest=ufoQuest&currentStep=start"--%>
-            <%--                       class="btn btn-primary btn-sm">Play</a>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
-            <%--            <div class="col">--%>
-            <%--                <div class="d-flex flex-column">--%>
-            <%--                    <div class="text-center px-lg-4 py-4 py-lg-0">--%>
-            <%--                        <h4>Quest 3</h4>--%>
-            <%--                        <p><br>quest 3 description</p>--%>
-            <%--                    </div>--%>
-            <%--                    <button class="btn btn-primary btn-sm" type="button">Play</button>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
-            <%--            <div class="col">--%>
-            <%--                <div class="d-flex flex-column">--%>
-            <%--                    <div class="text-center px-lg-4 py-4 py-lg-0">--%>
-            <%--                        <h4>Quest 4</h4>--%>
-            <%--                        <p><br>quest 4 description</p>--%>
-            <%--                    </div>--%>
-            <%--                    <button class="btn btn-primary btn-sm" type="button">Play</button>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
         </div>
     </div>
 </section>

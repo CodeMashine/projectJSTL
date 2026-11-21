@@ -20,35 +20,39 @@
     <div class="container-fluid">
         <div class="row vh-80 ">
             <div class="col-9 pe-2 h-100">
-                <div class="graph-container h-100 w-100 border rounded" style="overflow: hidden; background: rgba(255,255,255,0.1);"></div>
-<%--                <div id="graph-container" class="h-100 w-100 border rounded" style="overflow: hidden; background: rgba(255,255,255,0.1);"></div>--%>
+                <div class="graph-container h-100 w-100 border rounded"
+                     style="overflow: hidden; background: rgba(255,255,255,0.1);"></div>
             </div>
 
             <div class="col-3 d-flex flex-column h-100">
                 <div class="toolbar-container border rounded mb-2 p-2 bg-light bg-opacity-25 border"></div>
-                <form class="edit-Form p-3 border rounded bg-light bg-opacity-25 shadow-sm flex-grow-1" style="border-color: #333 !important;">
+                <form class="edit-Form p-3 border rounded bg-light bg-opacity-25 shadow-sm flex-grow-1"
+                      style="border-color: #333 !important;">
                     <!-- Текст блока -->
                     <div class="mb-3">
                         <label for="stepName" class="form-label fw-bold">Step name:</label>
                         <input id="stepName" name="stepName" class="form-control stepName" rows="1"
-                                  placeholder="Input step name..." required></input>
-                    </div> <div class="mb-3">
+                               placeholder="Input step name..." required></input>
+                    </div>
+                    <div class="mb-3">
                         <label for="questionText" class="form-label fw-bold">Text:</label>
                         <textarea id="questionText" name="questionText" class="form-control questionText" rows="3"
                                   placeholder="Input text..." required></textarea>
                     </div>
 
                     <div class="mb-3 flex-box">
-                        <label class="form-label fw-bold d-block"  >Step status:</label>
+                        <label class="form-label fw-bold d-block">Step status:</label>
 
                         <div class="form-check">
-                            <input class="form-check-input isPassable" type="radio" name="blockStatus" id="statusPassable"
-                                   value="passable" required >
+                            <input class="form-check-input isPassable" type="radio" name="blockStatus"
+                                   id="statusPassable"
+                                   value="passable" required>
                             <label class="form-check-label" for="statusPassable">Passable</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input isWin" type="radio" name="blockStatus" id="statusWin" value="win">
+                            <input class="form-check-input isWin" type="radio" name="blockStatus" id="statusWin"
+                                   value="win">
                             <label class="form-check-label" for="statusWin">Win</label>
                         </div>
 
@@ -63,14 +67,16 @@
                     <button type="submit" class="btn btn-primary w-100">Save</button>
                 </form>
             </div>
-
         </div>
-
     </div>
-
 </section>
-
-
+<div class="d-none">
+    <c:if test="${not empty requestScope.questName}">
+        <div class="quest-id-inlet">${requestScope.questId}</div>
+        <div class="quest-name-inlet">${requestScope.questName}</div>
+        <script type="text/xml" class="quest-xml-inlet">${requestScope.questXML}</script>
+    </c:if>
+</div>
 <jsp:include page="/WEB-INF/footer.jsp"/>
 <script>
     mxBasePath = '${pageContext.request.contextPath}/mxgraph/';
@@ -78,6 +84,7 @@
 <script src="${pageContext.request.contextPath}/mxgraph/mxClient.min.js"></script>
 <script> window.App = {}; </script>
 
+<script src="${pageContext.request.contextPath}/script/questLoader.js"></script>
 <script src="${pageContext.request.contextPath}/script/observer.js"></script>
 <script src="${pageContext.request.contextPath}/script/cellData.js"></script>
 <script src="${pageContext.request.contextPath}/script/editFormManager.js"></script>

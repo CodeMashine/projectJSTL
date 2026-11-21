@@ -38,6 +38,10 @@
                     <h3 class="fw-bold mb-4">YOU WIN!!!</h3>
                 </c:if>
 
+                <c:if test="${requestScope.currentQuestion.isLose()}">
+                    <h3 class="fw-bold mb-4">YOU LOSE!!!</h3>
+                </c:if>
+
                 <c:if test="${requestScope.currentQuestion.isLose() || requestScope.currentQuestion.isWin()}">
                     <a href="${pageContext.request.contextPath}/home"
                        class="btn btn-primary fs-5 me-2 px-4 py-2 btn" role="button">Home</a>

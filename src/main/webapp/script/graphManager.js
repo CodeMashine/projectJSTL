@@ -2,6 +2,16 @@ App.graphManager = class {
     constructor(container, editFormManager) {
         this.addCustomCodec();
         this.graph = new mxGraph(container);
+
+        this.graph.convertValueToString = function(cell) {
+            if (cell.value && cell.value.stepName) {
+                return cell.value.stepName;
+            }
+            return mxGraph.prototype.convertValueToString.apply(this, arguments);
+        };
+
+
+
         this.editFormManager = editFormManager;
     }
 
@@ -28,9 +38,12 @@ App.graphManager = class {
     }
 
     addCustomCodec() {
-        const stepCodec = new mxObjectCodec(new App.cellData());
-        stepCodec.name = "cellData";
-        stepCodec.encode = function (enc, obj) {
+        const cellData = new mxObjectCodec(new App.cellData());
+        cellData.name = "cellData";
+        cellData.getName = function () {
+            return "cellData";
+        };
+        cellData.encode = function (enc, obj) {
             const doc = mxUtils.createXmlDocument();
             const node = doc.createElement(this.name);
 
@@ -43,19 +56,42 @@ App.graphManager = class {
             return node;
         };
 
-        stepCodec.decode = function (dec, node, into) {
-            const obj = into || new App.cellData();
-
+        cellData.decode = function (dec, node, into) {
+            const obj = new App.cellData();
+            console.log(obj);
             obj.stepName = node.getAttribute('stepName');
             obj.questionText = node.getAttribute('questionText');
             obj.isWin = node.getAttribute('isWin') === '1';
             obj.isLose = node.getAttribute('isLose') === '1';
             obj.isPassable = node.getAttribute('isPassable') === '1';
-
             return obj;
         };
 
-        mxCodecRegistry.register(stepCodec);
+        mxCodecRegistry.register(cellData);
+        console.log(mxCodecRegistry.getCodec("cellData"));
+    }
+
+    loadXML(XML) {
+        const doc = mxUtils.parseXml(XML);
+        const codec = new mxCodec(doc);
+        const cellCodec = mxCodecRegistry.getCodec("cellData");
+
+        this.graph.getModel().beginUpdate();
+        try {
+            const nodes = doc.getElementsByTagName("cellData");
+            codec.decode(doc.documentElement, this.graph.getModel());
+            for (let i = 0; i < nodes.length; i++) {
+                const node = nodes[i];
+                const parentId = node.parentNode.getAttribute("id");
+                const obj = cellCodec.decode(codec, node);
+                const cell = this.graph.getModel().getCell(parentId);
+                if (cell) {
+                    cell.value = obj;
+                }
+            }
+        } finally {
+            this.graph.getModel().endUpdate();
+        }
     }
 
     clearSelection() {

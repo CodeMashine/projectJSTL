@@ -13,10 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet({
-		Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN,
-		Urls.STATISTIC, Urls.EDIT_PROFILE, Urls.EDIT_USERS, Urls.DELETE_PROFILE,
-		Urls.QUEST_EDITOR, Urls.QUESTS,Urls.SAVE_QUEST})
+@WebServlet({Urls.ROOT, Urls.HOME, Urls.QUEST_PAGE, Urls.SIGNUP, Urls.LOGOUT, Urls.LOGIN, Urls.STATISTIC,
+		Urls.EDIT_PROFILE, Urls.EDIT_USERS, Urls.DELETE_PROFILE, Urls.QUEST_EDITOR, Urls.QUESTS, Urls.SAVE_QUEST,
+		Urls.QUEST_MANAGEMENT, Urls.DELETE_QUEST})
 public class FrontController extends HttpServlet {
 	private final HttpResolver httpResolver = BeanFactory.getBean(HttpResolver.class);
 
@@ -25,7 +24,6 @@ public class FrontController extends HttpServlet {
 		super.init();
 		BeanFactory.getBean(UserService.class);
 		BeanFactory.getBean(Config.class);
-
 	}
 
 	@Override
@@ -33,6 +31,11 @@ public class FrontController extends HttpServlet {
 		Command command = httpResolver.resolve(req);
 		String componentPath = command.doGet(req);
 		String jsp = getJsp(componentPath);
+
+		if (componentPath.startsWith("redirect:")) {
+			checkRedirect(componentPath, resp);
+			return;
+		}
 		req.getRequestDispatcher(jsp).forward(req, resp);
 	}
 
@@ -42,9 +45,7 @@ public class FrontController extends HttpServlet {
 		String componentPath = command.doPost(req);
 
 		if (componentPath.startsWith("redirect:")) {
-			String redirectPath = componentPath.substring("redirect:".length());
-			resp.setStatus(200);
-			resp.sendRedirect(req.getContextPath() + getJsp(redirectPath));
+			checkRedirect(componentPath, resp);
 			return;
 		}
 
@@ -54,6 +55,12 @@ public class FrontController extends HttpServlet {
 
 	private String getJsp(String view) {
 		return "WEB-INF/" + view + ".jsp";
+	}
+
+	private void checkRedirect(String componentPath, HttpServletResponse resp) throws IOException {
+		String redirectPath = componentPath.substring("redirect:".length());
+		resp.setStatus(200);
+		resp.sendRedirect(redirectPath);
 	}
 
 }

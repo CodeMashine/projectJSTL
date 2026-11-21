@@ -37,18 +37,24 @@ App.toolbarManager = class {
         });
 
         this.toolbar.addItem('Save', null, () => {
+
+            const questId = this.getQuestId();
             const questName = this.getQuestName();
             const questXml = this.getXML();
             const questJson = this.getJson();
-            this.sendToServer(questName, questXml,questJson);
+            this.sendToServer(questName, questXml, questJson);
         });
     }
 
-    async sendToServer(questName, questXml,questJson) {
-        const params = new URLSearchParams ();
+    async sendToServer(questName, questXml, questJson) {
+        const params = new URLSearchParams();
         params.append('questName', questName);
         params.append('questXml', questXml);
         params.append('questJson', questJson);
+
+        if (this.getQuestId()) {
+            params.append('questId', this.getQuestId());
+        }
 
         try {
             const response = await fetch(`/save-quest`, {
@@ -69,6 +75,7 @@ App.toolbarManager = class {
         }
 
     }
+
     getXML() {
         const codec = new mxCodec();
         const node = codec.encode(this.graph.getModel());
@@ -85,7 +92,7 @@ App.toolbarManager = class {
             let stepData = cell.value;
             if (!stepData) continue;
             preJson[cell.id] = {
-                id:cell.id,
+                id: cell.id,
                 stepName: stepData.stepName,
                 questionText: stepData.questionText,
                 isWin: stepData.isWin,
@@ -94,7 +101,7 @@ App.toolbarManager = class {
             }
             for (let i = 0; i < cell.edges.length; i++) {
                 let targetId = cell.edges[i].target.id;
-                if(targetId !== cell.id){
+                if (targetId !== cell.id) {
                     let choice = {};
                     choice["id"] = targetId;
                     preJson[cell.id].choices.push(choice);
@@ -102,19 +109,22 @@ App.toolbarManager = class {
             }
         }
 
-        for(let key in preJson){
-            for(let choice of preJson[key].choices){
-                choice["name"] = preJson[choice.id].stepName ;
+        for (let key in preJson) {
+            for (let choice of preJson[key].choices) {
+                choice["name"] = preJson[choice.id].stepName;
             }
 
         }
-
-
-        return JSON.stringify(preJson,null,2);;
+        return JSON.stringify(preJson, null, 2);
     }
 
     getQuestName() {
         return document.querySelector(".quest-name").value;
+    }
+
+    getQuestId() {
+        let questIdInlet = document.querySelector(".quest-id-inlet");
+        return questIdInlet != null ? parseInt(questIdInlet.innerText) : null;
     }
 }
 

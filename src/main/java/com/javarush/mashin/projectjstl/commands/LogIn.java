@@ -15,18 +15,10 @@ public class LogIn implements Command {
 
 	@Override
 	public String doPost(HttpServletRequest req) {
-		String name = req.getParameter("name");
-		String password = req.getParameter("password");
 		HttpSession session = req.getSession();
-
-		boolean isLogIn = userService.authenticate(name, password);
-//		req.setAttribute("isLogin", isLogIn);
-
-		if (isLogIn) {
-			UserDTO userDTO = userService.getUserByName(name);
-			session.setAttribute("user", userDTO);
-		}
-
-		return isLogIn ? Urls.HOME : Urls.LOGIN;
+		int userId = (Integer) session.getAttribute("loginId");
+		UserDTO userDTO = userService.getUserDTO(userId);
+		session.setAttribute("user", userDTO);
+		return "redirect:" + Urls.HOME;
 	}
 }

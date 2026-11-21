@@ -21,16 +21,18 @@ public class QuestPage implements Command {
 	public String doGet(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		UserDTO user = (UserDTO) session.getAttribute("user");
-//		Integer questId = (Integer) session.getAttribute("questId");
 
-		int questId = Integer.parseInt(req.getParameter("questId"));
-		String nextStep = req.getParameter("nextStep");
+		Integer questId = getOrDefaultQuestId(req);
+		String nextStep = getOrDefaultQuestStep(req);
 		String previousStep = (String) session.getAttribute("previousStep");
 
 		QuestDTO quest = questService.getQuest(questId);
 		QuestionDTO currentQuestion = quest.getQuestion(nextStep);
 
-		gameService.step(quest, currentQuestion, user);
+		if (!nextStep.equals(previousStep)) {
+			gameService.step(quest, currentQuestion, user );
+			session.setAttribute("previousStep", nextStep);
+		}
 
 		req.setAttribute("questId", questId);
 		req.setAttribute("questName", quest.getQuestName());
@@ -38,4 +40,24 @@ public class QuestPage implements Command {
 
 		return getView();
 	}
+
+	private String getOrDefaultQuestStep(HttpServletRequest req) {
+		String currentStep = req.getParameter("nextStep");
+		if (currentStep == null) {
+			currentStep = "2";
+		}
+		return currentStep;
+	}
+
+	// need maybe
+	private Integer getOrDefaultQuestId(HttpServletRequest req) {
+		Integer questName = Integer.valueOf(req.getParameter("questId"));
+		if (questName == null) {
+			questName = 1;
+
+		}
+		return questName;
+	}
+
+
 }

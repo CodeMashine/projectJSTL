@@ -1,20 +1,33 @@
 package com.javarush.mashin.projectjstl.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserDTO {
 	private int id;
 	private String name;
-	private String password;
 	private ROLE role;
-	private int questPlayed = 0;
-	private int questWin = 0;
-	private int questLose = 0;
+	private Map<Integer, String> gamesInProgress = new HashMap<>();
 
-	public UserDTO() {}
-	public UserDTO(int id, String name, String password , ROLE role ) {
+	public UserDTO() {
+	}
+
+	public UserDTO(int id, String name, ROLE role) {
 		this.id = id;
 		this.name = name;
-		this.password = password;
 		this.role = role;
+	}
+
+	public Map<Integer, String> getGamesInProgress() {
+		return gamesInProgress;
+	}
+
+	public void setGameInProgress(Map<Integer, String> gameInProgress) {
+		this.gamesInProgress = gameInProgress;
+	}
+
+	public void removeGameInProgress(int gameId) {
+		gamesInProgress.remove(gameId);
 	}
 
 	public int getId() {
@@ -29,35 +42,8 @@ public class UserDTO {
 		return role;
 	}
 
-	public boolean checkPassword(String raw){
-		return password.equals(raw);
-	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getQuestLose() {
-		return questLose;
-	}
-
-	public void addQuestLose() {
-		this.questLose += 1;
-	}
-
-	public int getQuestPlayed() {
-		return questPlayed;
-	}
-
-	public void addQuestPlayed() {
-		this.questPlayed += 1;
-	}
-
-	public int getQuestWin() {
-		return questWin;
-	}
-
-	public void addQuestWin() {
-		this.questWin += 1;
 	}
 }

@@ -20,6 +20,8 @@ public class Urls {
 	public static final String EDIT_USERS = "/edit-users";
 	public static final String DELETE_PROFILE = "/delete-profile";
 	public static final String QUEST_EDITOR = "/quest-editor";
-	public static final String QUESTS= "/quests";
-	public static final String SAVE_QUEST= "/save-quest";
+	public static final String QUESTS = "/quests";
+	public static final String SAVE_QUEST = "/save-quest";
+	public static final String QUEST_MANAGEMENT = "/quest-management";
+	public static final String DELETE_QUEST = "/delete-quest";
 }

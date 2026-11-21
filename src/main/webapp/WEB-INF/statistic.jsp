@@ -21,18 +21,22 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Quests played</th>
+                    <th>Role</th>
                     <th>Quests win</th>
                     <th>Quests lose</th>
+                    <th>Quests played</th>
+                    <th>Game in Progress</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="user" items="${requestScope.usersStatistic}">
                     <tr>
                         <td>${user.getName()}</td>
-                        <td>${user.getQuestPlayed()}</td>
-                        <td>${user.getQuestWin()}</td>
-                        <td>${user.getQuestLose()}</td>
+                        <td>${user.getRole()}</td>
+                        <td>${user.getGameWin()}</td>
+                        <td>${user.getGameLose()}</td>
+                        <td>${user.getGamePlayed()}</td>
+                        <td>${user.getGameInProgress()}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
