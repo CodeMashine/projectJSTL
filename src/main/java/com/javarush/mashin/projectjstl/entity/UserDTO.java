@@ -26,10 +26,6 @@ public class UserDTO {
 		this.gamesInProgress = gameInProgress;
 	}
 
-	public void removeGameInProgress(int gameId) {
-		gamesInProgress.remove(gameId);
-	}
-
 	public int getId() {
 		return id;
 	}
